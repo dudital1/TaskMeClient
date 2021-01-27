@@ -17,7 +17,7 @@ const Home = () => {
             password: passwordReg,
             name: nameReg,
         }).then((response => {
-            console.log(JSON.stringify(response));
+            console.log(JSON.stringify(response.data));
         }))
     }
     const signIn = () => {
@@ -25,7 +25,7 @@ const Home = () => {
             email: emailLog,
             password: passwordLog,
         }).then((response => {
-            console.log(JSON.stringify(response));
+            console.log(JSON.stringify(response.data));
         }))
     }
 
@@ -35,7 +35,7 @@ const Home = () => {
             url: "http://localhost:5500/auth/googlelogin",
             data: { tokenId: response.tokenId }
         }).then(response => {
-            console.log(JSON.stringify(response.data));
+            console.log(JSON.stringify(response.data.data));
         })
     }
 

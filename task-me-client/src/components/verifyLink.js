@@ -10,7 +10,7 @@ const VerifyLink = () => {
         axios.post('http://localhost:5500/auth/email-activate', {
             token: token
         }).then((response => {
-            console.log(JSON.stringify(response));
+            console.log(JSON.stringify(response.data));
         }))
     }
     return (
