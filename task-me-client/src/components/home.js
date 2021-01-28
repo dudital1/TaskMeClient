@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import GoogleLogin from 'react-google-login';
 import axios from 'axios';
 import { useState } from "react";
+axios.defaults.withCredentials = true;
+const CLIENT_ID = "797191547152-h2lf9jrigv5bmc3rv4cic2ph3vr42m45.apps.googleusercontent.com";
 
 const Home = () => {
     const [emailReg, setEmailReg] = useState("");
@@ -10,6 +12,8 @@ const Home = () => {
 
     const [emailLog, setEmailLog] = useState("");
     const [passwordLog, setPasswordLog] = useState("");
+
+    const [loginStatus , setLoginStatus ] = useState("");
 
     const register = () => {
         axios.post('http://localhost:5500/auth/signup', {
@@ -25,9 +29,21 @@ const Home = () => {
             email: emailLog,
             password: passwordLog,
         }).then((response => {
-            console.log(JSON.stringify(response.data));
+            if(response.data.message){
+                setLoginStatus(response.data.message);
+            }else{
+                setLoginStatus(response.data.user.name);
+            }
+            // console.log(JSON.stringify(response.data));
         }))
     }
+    useEffect(() => {
+        axios.get("http://localhost:5500/auth/sign-in").then((response) =>{
+            if(response.data.loggedIn === true)
+            setLoginStatus(response.data.loggedIn);
+            console.log(response.data);
+        })
+    }, []);
 
     const responseSuccessGoogle = (response) => {
         axios({
@@ -35,7 +51,7 @@ const Home = () => {
             url: "http://localhost:5500/auth/googlelogin",
             data: { tokenId: response.tokenId }
         }).then(response => {
-            console.log(JSON.stringify(response.data.data));
+            console.log(JSON.stringify(response.data));
         })
     }
 
@@ -77,9 +93,11 @@ const Home = () => {
                     }}/>
                 <button onClick={signIn}>login</button>
             </div>
+            <h1>{loginStatus}</h1>
+
             <h1>login with google</h1>
             <GoogleLogin
-                clientId="797191547152-h2lf9jrigv5bmc3rv4cic2ph3vr42m45.apps.googleusercontent.com"
+                clientId = {CLIENT_ID}
                 buttonText="Login With Google"
                 onSuccess={responseSuccessGoogle}
                 onFailure={responseErrorGoogle}
