@@ -5,8 +5,8 @@ import Signup from "./Signup";
 import VerifyLink from "./verifyLink";
 import Dashboard from "./dashboard/Dashboard";
 import {
-  BrowserRouter as Router,
-  Route
+    BrowserRouter as Router,
+    Route, Switch
 } from "react-router-dom";
 
 function App() {
