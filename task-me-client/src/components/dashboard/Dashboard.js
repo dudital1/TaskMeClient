@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
+import {ThemeProvider, createMuiTheme, makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
 import Box from '@material-ui/core/Box';
+import Switch from '@material-ui/core/Switch';
+
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
@@ -15,6 +17,7 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
+import Avatar from '@material-ui/core/Avatar';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
@@ -45,6 +48,7 @@ const useStyles = makeStyles((theme) => ({
     toolbar: {
         paddingRight: 24, // keep right padding when drawer closed
     },
+
     toolbarIcon: {
         display: 'flex',
         alignItems: 'center',
@@ -139,6 +143,8 @@ const Dashboard = () => {
                 localStorage.clear();
                 history.push('/');
             }
+            console.log(user)
+
         }
     )}, []);
 
@@ -148,8 +154,15 @@ const Dashboard = () => {
             history.push('/');
         })
     }
+    const [darkMode,setDarkMode] = useState(false)
+    const theme = createMuiTheme({
+        palette:{
+            type: darkMode? "dark":"light",
+        },
+    });
 
     return (
+        <ThemeProvider theme={theme}>
         <div className={classes.root}>
             <CssBaseline />
             <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
@@ -164,8 +177,12 @@ const Dashboard = () => {
                         <MenuIcon />
                     </IconButton>
                     <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-                        {user ? user.name : ""}
+                        {user ? user.name.toUpperCase() : ""}
                     </Typography>
+                    Dark Mode
+                    <Switch checked={darkMode} onChange={() => setDarkMode(!darkMode)}></Switch>
+                    <Avatar alt="Remy Sharp" src={user.picture} />
+
                     <IconButton color="inherit">
                         <Badge color="secondary" >
                             <ExitToAppIcon onClick={logout} />
@@ -196,29 +213,39 @@ const Dashboard = () => {
                     <Grid container spacing={3}>
                         <Grid item xs={12} md={4} lg={3}>
                             <Paper className={fixedHeightPaper}>
-                                <OverallStats tmpUser={user}/>
-                            </Paper>
-                        </Grid>
-                        {/* <Grid item xs={12} md={4} lg={3}>
-                            <Paper className={fixedHeightPaper}>
-                                <OverallStats />
+                                <OverallStats tmpUser={user} category={"Meeting"}/>
                             </Paper>
                         </Grid>
                         <Grid item xs={12} md={4} lg={3}>
                             <Paper className={fixedHeightPaper}>
-                                <OverallStats />
+                                <OverallStats tmpUser={user} category={"Training"} />
                             </Paper>
                         </Grid>
                         <Grid item xs={12} md={4} lg={3}>
                             <Paper className={fixedHeightPaper}>
-                                <OverallStats />
+                                <OverallStats tmpUser={user} category={"Education"}/>
                             </Paper>
-                        </Grid> */}
-                        {/* <Grid item xs={12}>
+                        </Grid>
+                        <Grid item xs={12} md={4} lg={3}>
+                            <Paper className={fixedHeightPaper}>
+                                <OverallStats tmpUser={user} category={"General"}/>
+                            </Paper>
+                        </Grid>
+                        <Grid item xs={12} md={4} lg={3}>
+                            <Paper className={fixedHeightPaper}>
+                                <OverallStats tmpUser={user} category={"Home"}/>
+                            </Paper>
+                        </Grid>
+                        <Grid item xs={12} md={4} lg={3}>
+                            <Paper className={fixedHeightPaper}>
+                                <OverallStats tmpUser={user} category={"All"}/>
+                            </Paper>
+                        </Grid>
+                        <Grid item xs={12}>
                             <Paper className={classes.paper}>
                                 <Orders tmpUser={user}/>
                             </Paper>
-                        </Grid> */}
+                        </Grid>
                         {/* Chart */}
                         <Grid item xs={12} md={8} lg={9}>
                             <Paper className={fixedHeightPaper}>
@@ -239,6 +266,7 @@ const Dashboard = () => {
                 </Container>
             </main>
         </div>
+        </ThemeProvider>
     );
 };
 export default Dashboard;

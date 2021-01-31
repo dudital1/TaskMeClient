@@ -7,52 +7,51 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import {useEffect, useState} from 'react';
 
-
 function preventDefault(event) {
     event.preventDefault();
 }
-
 const useStyles = makeStyles({
     depositContext: {
         flex: 1,
     },
 });
 
-export default function OverallStats({tmpUser}) {
+export default function OverallStats({tmpUser, category}) {
 
-    
-    let history = useHistory();
     const classes = useStyles();
-    const [user , setUser ] = useState( tmpUser);
-    const [allTasks , setAllTasks ] = useState(null);
+    const [user , setUser ] = useState(tmpUser);
+    const [allTasks , setAllTasks ] = useState([]);
+    const [categoryLength , setCategoryLength ] = useState(null);
+    const [completedNumber , setCompletedNumber ] = useState(null);
 
-
+    const tasksByCategory = () => {
+        let call=`http://localhost:5500/api/tasks/?category=${category}`
+        if (category=="All")
+            call="http://localhost:5500/api/tasks/"
+        return(
+        axios.post(`${call}`, {
+            email: user.email,
+        }).then((response => {
+            setAllTasks(response.data)
+            setCategoryLength(response.data.length)
+            setCompletedNumber(response.data.filter(task => task.status==="Done").length)
+        })))
+    }
     useEffect(() => {
-        axios.get("http://localhost:5500/auth/sign-in").then((response) =>{
-            if(response.data.loggedIn === true){
-                setUser(response.data.user);
-            }
-            else
-                history.push('/');
-        })
+        tasksByCategory()
     }, []);
-
-
 
     return (
         <React.Fragment>
-            <Title>{user.name}</Title>
             <Typography component="p" variant="h4">
-                {user.name}
+                {category}
+            </Typography>
+            <Title>{completedNumber?completedNumber:"Loading..."}/{categoryLength?categoryLength:"Loading..."}</Title>
+            <Typography component="p" variant="h4">
             </Typography>
             <Typography color="textSecondary" className={classes.depositContext}>
-                on 15 March, 2019
+                Completed
             </Typography>
-            <div>
-                <Link color="primary" href="#" onClick={preventDefault}>
-                    View balance
-                </Link>
-            </div>
         </React.Fragment>
     );
 }
