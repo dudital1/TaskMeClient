@@ -29,23 +29,13 @@ export default function OverallStats() {
         axios.get("http://localhost:5500/auth/sign-in").then((response) =>{
             if(response.data.loggedIn === true){
                 setUser(response.data.user);
-                getAllTasks(response.data.user);
             }
             else
                 history.push('/');
         })
     }, []);
 
-    const getAllTasks = (user)=> {
-        axios.post(`http://localhost:5500/api/tasks`, {
-            email: user.email,
-        }).then((response => {
-            if(response){
-                setAllTasks(response.data);
-                console.log(allTasks);
-            }
-        }))
-    }
+
 
     return (
         <React.Fragment>

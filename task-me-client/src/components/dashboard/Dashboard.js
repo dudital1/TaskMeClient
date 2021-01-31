@@ -37,9 +37,7 @@ function Copyright() {
         </Typography>
     );
 }
-
 const drawerWidth = 240;
-
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
@@ -119,10 +117,12 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function Dashboard() {
+const Dashboard = props => {
+
     let history = useHistory();
-    const [loginStatus , setLoginStatus ] = useState("");
-    const [user , setUser ] = useState({});
+    const [loginStatus , setLoginStatus ] = useState( localStorage.getItem("storageLogin"));
+    const [user , setUser ] = useState( JSON.parse(localStorage.getItem("storageUser")));
+    const [tasks , setTasks ] = useState([]);
 
     const classes = useStyles();
     const [open, setOpen] = React.useState(true);
@@ -137,13 +137,32 @@ export default function Dashboard() {
     useEffect(() => {
         axios.get("http://localhost:5500/auth/sign-in").then((response) =>{
             if(response.data.loggedIn === true){
-                setLoginStatus(response.data.loggedIn);
-                setUser(response.data.user);
+                console.log("user" ,  (user))
+                console.log("email" ,  (user.email))
+                console.log("Status",loginStatus)
             }
-            else
+            else{
+                localStorage.setItem('storageLogin',false);
                 history.push('/');
-        })
-    }, []);
+            }
+        }
+        )
+        axios.post(`http://localhost:5500/api/tasks`, {
+                    email: user.email,
+                }).then((response => {
+                    console.log("response", response)
+                    if(response){
+                        setTasks(response.data);
+                        console.log(tasks);
+                    }
+                }))
+    },[]);
+
+    function logout(){
+        //Call axios logout
+        localStorage.clear();
+        history.push('/');
+    }
 
     return (
         <div className={classes.root}>
@@ -160,11 +179,12 @@ export default function Dashboard() {
                         <MenuIcon />
                     </IconButton>
                     <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-                        {user.name}
+                        {user? user.name:""}
                     </Typography>
                     <IconButton color="inherit">
-                        <Badge badgeContent={4} color="secondary">
+                        <Badge badgeContent={4} color="secondary" onClick={logout}>
                             <NotificationsIcon />
+
                         </Badge>
                     </IconButton>
                 </Toolbar>
@@ -221,12 +241,12 @@ export default function Dashboard() {
                                 <Chart />
                             </Paper>
                         </Grid>
-                        {/* Recent Deposits */}
-                        {/* <Grid item xs={12} md={4} lg={3}>
-                            <Paper className={fixedHeightPaper}>
-                                <OverallStats />
-                            </Paper>
-                        </Grid> */}
+                        {/* Recent Deposits*/}
+                        {/*<Grid item xs={12} md={4} lg={3}>*/}
+                        {/*    <Paper className={fixedHeightPaper}>*/}
+                        {/*        <OverallStats />*/}
+                        {/*    </Paper>*/}
+                        {/*</Grid>*/}
 
                     </Grid>
                     <Box pt={4}>
@@ -236,4 +256,5 @@ export default function Dashboard() {
             </main>
         </div>
     );
-}
+};
+export default Dashboard;

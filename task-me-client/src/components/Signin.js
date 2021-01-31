@@ -54,11 +54,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 ///
 
-const Signin = () => {
+const Signin = (props) => {
     const classes = useStyles();
     let history = useHistory();
 
     const [emailLog, setEmailLog] = useState("");
+    const [user,setUser ] = useState("");
     const [passwordLog, setPasswordLog] = useState("");
 
     const [loginStatus , setLoginStatus ] = useState("");
@@ -73,7 +74,13 @@ const Signin = () => {
                 setLoginStatus(response.data.message);
             }else{
                 setLoginStatus(response.data.user.name);
+                setUser(response.data.user);
+                console.log("sign in", response.data.user)
                 history.push('/dashboard')
+                // props.history.push({
+                //     pathname:'/dashboard',
+                //     user
+                // })
             }
         }))
     }
@@ -92,8 +99,9 @@ const Signin = () => {
             url: "http://localhost:5500/auth/googlelogin",
             data: { tokenId: response.tokenId }
         }).then(response => {
+            localStorage.setItem('storageUser',JSON.stringify(response.data.user));
+            localStorage.setItem('storageLogin',true);
             history.push('/dashboard')
-            console.log(JSON.stringify(response.data));
         })
     }
 
