@@ -18,12 +18,14 @@ const useStyles = makeStyles({
     },
 });
 
-export default function OverallStats() {
+export default function OverallStats({tmpUser}) {
+
+    
     let history = useHistory();
     const classes = useStyles();
-    const [user , setUser ] = useState({});
+    const [user , setUser ] = useState( tmpUser);
     const [allTasks , setAllTasks ] = useState(null);
-    
+
 
     useEffect(() => {
         axios.get("http://localhost:5500/auth/sign-in").then((response) =>{
@@ -41,7 +43,7 @@ export default function OverallStats() {
         <React.Fragment>
             <Title>{user.name}</Title>
             <Typography component="p" variant="h4">
-                {}
+                {user.name}
             </Typography>
             <Typography color="textSecondary" className={classes.depositContext}>
                 on 15 March, 2019

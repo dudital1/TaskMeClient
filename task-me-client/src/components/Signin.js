@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.secondary.main,
     },
     form: {
-        width: '100%', // Fix IE 11 issue.
+        width: '100%', 
         marginTop: theme.spacing(1),
     },
     submit: {
@@ -54,44 +54,37 @@ const useStyles = makeStyles((theme) => ({
 }));
 ///
 
-const Signin = (props) => {
+const Signin = () => {
     const classes = useStyles();
     let history = useHistory();
 
     const [emailLog, setEmailLog] = useState("");
-    const [user,setUser ] = useState("");
     const [passwordLog, setPasswordLog] = useState("");
 
-    const [loginStatus , setLoginStatus ] = useState("");
+    // const [loginStatus , setLoginStatus ] = useState(false);
 
     const signIn = () => {
         axios.post(`http://localhost:5500/auth/sign-in`, {
             email: emailLog,
             password: passwordLog,
         }).then((response => {
-            console.log(response.data.message)
             if(response.data.message){
-                setLoginStatus(response.data.message);
+                console.log(response.data.message);
             }else{
-                setLoginStatus(response.data.user.name);
-                setUser(response.data.user);
-                console.log("sign in", response.data.user)
+                localStorage.setItem('storageUser',JSON.stringify(response.data.user));
+                localStorage.setItem('storageLogin',true);
                 history.push('/dashboard')
-                // props.history.push({
-                //     pathname:'/dashboard',
-                //     user
-                // })
             }
         }))
     }
-    useEffect(() => {
-        axios.get("http://localhost:5500/auth/sign-in").then((response) =>{
-            if(response.data.loggedIn === true){
-                setLoginStatus(response.data.loggedIn);
-            }
-            console.log(response.data);
-        })
-    }, []);
+    // useEffect(() => {
+    //     axios.get("http://localhost:5500/auth/sign-in").then((response) =>{
+    //         if(response.data.loggedIn === true){
+    //             setLoginStatus(response.data.loggedIn);
+    //         }
+    //         console.log(response.data);
+    //     })
+    // }, []);
 
     const responseSuccessGoogle = (response) => {
         axios({
@@ -101,12 +94,13 @@ const Signin = (props) => {
         }).then(response => {
             localStorage.setItem('storageUser',JSON.stringify(response.data.user));
             localStorage.setItem('storageLogin',true);
-            history.push('/dashboard')
+            history.push('/dashboard');
         })
     }
 
     const responseErrorGoogle = (response) => {
         console.log(response);
+        history.push('/')
     }
     return (
         <Container component="main" maxWidth="xs">

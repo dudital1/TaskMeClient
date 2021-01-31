@@ -40,11 +40,6 @@ export default function Orders() {
         axios.get("http://localhost:5500/auth/sign-in").then((response) =>{
             if(response.data.loggedIn === true){
                 setUser(response.data.user);
-                console.log(user)
-                console.log("use effect user")
-                console.log(response.data.user)
-                console.log("use effect response")
-
             }
             else
                 history.push('/');

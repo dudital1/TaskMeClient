@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -17,7 +17,7 @@ import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import NotificationsIcon from '@material-ui/icons/Notifications';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { mainListItems, secondaryListItems } from './listItems';
 import Chart from './Chart';
 import OverallStats from './OverallStats';
@@ -117,12 +117,11 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Dashboard = props => {
+const Dashboard = () => {
 
     let history = useHistory();
-    const [loginStatus , setLoginStatus ] = useState( localStorage.getItem("storageLogin"));
-    const [user , setUser ] = useState( JSON.parse(localStorage.getItem("storageUser")));
-    const [tasks , setTasks ] = useState([]);
+    const user = JSON.parse(localStorage.getItem("storageUser"));
+    const [tasks, setTasks] = useState([]);
 
     const classes = useStyles();
     const [open, setOpen] = React.useState(true);
@@ -131,37 +130,23 @@ const Dashboard = props => {
     };
     const handleDrawerClose = () => {
         setOpen(false);
-    };
+    }
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
     useEffect(() => {
-        axios.get("http://localhost:5500/auth/sign-in").then((response) =>{
-            if(response.data.loggedIn === true){
-                console.log("user" ,  (user))
-                console.log("email" ,  (user.email))
-                console.log("Status",loginStatus)
-            }
-            else{
-                localStorage.setItem('storageLogin',false);
+        axios.get("http://localhost:5500/auth/sign-in").then((response) => {
+            if (response.data.loggedIn === false) {
+                localStorage.clear();
                 history.push('/');
             }
         }
-        )
-        axios.post(`http://localhost:5500/api/tasks`, {
-                    email: user.email,
-                }).then((response => {
-                    console.log("response", response)
-                    if(response){
-                        setTasks(response.data);
-                        console.log(tasks);
-                    }
-                }))
-    },[]);
+    )}, []);
 
-    function logout(){
-        //Call axios logout
-        localStorage.clear();
-        history.push('/');
+    function logout() {
+        axios.get('http://localhost:5500/auth/logout').then(() => {
+            localStorage.clear();
+            history.push('/');
+        })
     }
 
     return (
@@ -179,12 +164,11 @@ const Dashboard = props => {
                         <MenuIcon />
                     </IconButton>
                     <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-                        {user? user.name:""}
+                        {user ? user.name : ""}
                     </Typography>
                     <IconButton color="inherit">
-                        <Badge badgeContent={4} color="secondary" onClick={logout}>
-                            <NotificationsIcon />
-
+                        <Badge color="secondary" >
+                            <ExitToAppIcon onClick={logout} />
                         </Badge>
                     </IconButton>
                 </Toolbar>
@@ -212,7 +196,7 @@ const Dashboard = props => {
                     <Grid container spacing={3}>
                         <Grid item xs={12} md={4} lg={3}>
                             <Paper className={fixedHeightPaper}>
-                                <OverallStats/>
+                                <OverallStats tmpUser={user}/>
                             </Paper>
                         </Grid>
                         {/* <Grid item xs={12} md={4} lg={3}>
@@ -230,23 +214,23 @@ const Dashboard = props => {
                                 <OverallStats />
                             </Paper>
                         </Grid> */}
-                        <Grid item xs={12}>
+                        {/* <Grid item xs={12}>
                             <Paper className={classes.paper}>
-                                <Orders />
+                                <Orders tmpUser={user}/>
                             </Paper>
-                        </Grid>
+                        </Grid> */}
                         {/* Chart */}
                         <Grid item xs={12} md={8} lg={9}>
                             <Paper className={fixedHeightPaper}>
-                                <Chart />
+                                <Chart  tmpUser ={user}/>
                             </Paper>
                         </Grid>
-                        {/* Recent Deposits*/}
-                        {/*<Grid item xs={12} md={4} lg={3}>*/}
-                        {/*    <Paper className={fixedHeightPaper}>*/}
-                        {/*        <OverallStats />*/}
-                        {/*    </Paper>*/}
-                        {/*</Grid>*/}
+                        {/* Recent Deposits
+                        <Grid item xs={12} md={4} lg={3}>
+                            <Paper className={fixedHeightPaper}>
+                                <OverallStats />
+                            </Paper>
+                        </Grid> */}
 
                     </Grid>
                     <Box pt={4}>
