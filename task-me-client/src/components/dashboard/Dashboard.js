@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
@@ -9,21 +9,9 @@ import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
 import Chart from './Chart';
 import OverallStats from './OverallStats';
-import DataTable from './Orders';
-import { useHistory } from "react-router-dom";
+import TaskTable from './TasksTable'
+// import { useHistory } from "react-router-dom";
 
-function Copyright() {
-    return (
-        <Typography variant="body2" color="textSecondary" align="center">
-            {'Copyright © '}
-            <Link color="inherit" href="#">
-                Your Website
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -107,9 +95,9 @@ const useStyles = makeStyles((theme) => ({
 
 const Dashboard = () => {
 
-    let history = useHistory();
+    // let history = useHistory();
     const user = JSON.parse(localStorage.getItem("storageUser"));
-    const [tasks, setTasks] = useState([]);
+    // const [tasks, setTasks] = useState([]);
 
     const classes = useStyles();
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
@@ -151,7 +139,7 @@ const Dashboard = () => {
                 </Grid>
                 <Grid item xs={12}>
                     <Paper className={classes.paper}>
-                        <DataTable tmpUser={user}/>
+                        <TaskTable tmpUser={user}/>
                     </Paper>
                 </Grid>
                 <Grid item xs={12} md={8} lg={9}>
@@ -160,9 +148,6 @@ const Dashboard = () => {
                     </Paper>
                 </Grid>
             </Grid>
-            <Box pt={4}>
-                <Copyright />
-            </Box>
         </Container>
     </main>
     );

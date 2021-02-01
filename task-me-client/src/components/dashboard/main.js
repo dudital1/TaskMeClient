@@ -25,14 +25,15 @@ import {
     Route , Switch as Sw,
 } from "react-router-dom";
 import Dashboard from './Dashboard';
-
+import Box from "@material-ui/core/Box";
+import Container from "@material-ui/core/Container";
 
 function Copyright() {
     return (
         <Typography variant="body2" color="textSecondary" align="center">
             {'Copyright © '}
             <Link color="inherit" href="#">
-                Your Website
+                TaskMe - David and Saar Ltd
             </Link>{' '}
             {new Date().getFullYear()}
             {'.'}
@@ -213,20 +214,12 @@ const Main = () => {
                 </Route>
             </Sw>
         </div>
+            <Box pt={4}>
+                <Copyright />
+            </Box>
         </ThemeProvider>
 
     );
 };
 export default Main;
 
-{/* <div> */}
-
-{/* <Sw>
-            <Route>
-                <Dashboard path='/main/dashboard'/>
-            </Route>
-            <Route>
-                <Profile/>
-            </Route>
-        </Sw>
-        </div> */}

@@ -58,7 +58,7 @@ const Signup = () => {
     const [passwordReg, setPasswordReg] = useState("");
     const [nameReg, setNameReg] = useState("");
 
-    const [loginStatus , setLoginStatus ] = useState("");
+    // const [loginStatus , setLoginStatus ] = useState("");
     const register = () => {
         axios.post('http://localhost:5500/auth/signup', {
             email: emailReg,
@@ -72,7 +72,7 @@ const Signup = () => {
     useEffect(() => {
         axios.get("http://localhost:5500/auth/sign-in").then((response) =>{
             if(response.data.loggedIn === true)
-                setLoginStatus(response.data.loggedIn);
+                // setLoginStatus(response.data.loggedIn);
             console.log(response.data);
         })
     }, []);
