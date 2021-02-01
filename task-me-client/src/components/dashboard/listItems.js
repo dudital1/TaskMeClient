@@ -23,7 +23,7 @@ export const mainListItems = (
         <ListItem button>
             <ListItemIcon>
                 <PeopleIcon>
-                    <Link exec to='/profile' />
+                    <Link exec to='/main/profile' />
                 </PeopleIcon>
             </ListItemIcon>
             <ListItemText primary="Profile" />

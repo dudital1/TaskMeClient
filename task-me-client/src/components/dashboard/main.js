@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
-import {ThemeProvider, createMuiTheme, makeStyles } from '@material-ui/core/styles';
+import { ThemeProvider, createMuiTheme, makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
 import Switch from '@material-ui/core/Switch';
@@ -22,11 +22,12 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import {
     BrowserRouter as Router,
-    Route , Switch as Sw,
+    Route, Switch as Sw,
 } from "react-router-dom";
 import Dashboard from './Dashboard';
 import Box from "@material-ui/core/Box";
 import Container from "@material-ui/core/Container";
+import Profile from './profile';
 
 function Copyright() {
     return (
@@ -146,7 +147,8 @@ const Main = () => {
             console.log(user)
 
         }
-    )}, []);
+        )
+    }, []);
 
     function logout() {
         axios.get('http://localhost:5500/auth/logout').then(() => {
@@ -154,66 +156,69 @@ const Main = () => {
             history.push('/');
         })
     }
-    const [darkMode,setDarkMode] = useState(false)
+    const [darkMode, setDarkMode] = useState(false)
     const theme = createMuiTheme({
-        palette:{
-            type: darkMode? "dark":"light",
+        palette: {
+            type: darkMode ? "dark" : "light",
         },
     });
 
     return (
         <ThemeProvider theme={theme}>
-        
-        <div className={classes.root}>
-            <CssBaseline />
-            <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
-                <Toolbar className={classes.toolbar}>
-                    <IconButton
-                        edge="start"
-                        color="inherit"
-                        aria-label="open drawer"
-                        onClick={handleDrawerOpen}
-                        className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-                        {user ? user.name.toUpperCase() : ""}
-                    </Typography>
+
+            <div className={classes.root}>
+                <CssBaseline />
+                <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
+                    <Toolbar className={classes.toolbar}>
+                        <IconButton
+                            edge="start"
+                            color="inherit"
+                            aria-label="open drawer"
+                            onClick={handleDrawerOpen}
+                            className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                        <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
+                            {user ? user.name.toUpperCase() : ""}
+                        </Typography>
                     Dark Mode
                     <Switch checked={darkMode} onChange={() => setDarkMode(!darkMode)}></Switch>
-                    <Avatar alt="Remy Sharp" src={user.picture} />
+                        <Avatar alt="Remy Sharp" src={user.picture} />
 
-                    <IconButton color="inherit">
-                        <Badge color="secondary" >
-                            <ExitToAppIcon onClick={logout} />
-                        </Badge>
-                    </IconButton>
-                </Toolbar>
-            </AppBar>
-            <Drawer
-                variant="permanent"
-                classes={{
-                    paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
-                }}
-                open={open}
-            >
-                <div className={classes.toolbarIcon}>
-                    <IconButton onClick={handleDrawerClose}>
-                        <ChevronLeftIcon />
-                    </IconButton>
-                </div>
-                <Divider />
-                <List>{mainListItems}</List>
-                <Divider />
-                <List>{secondaryListItems}</List>
-            </Drawer>
-            <Sw>
-                <Route>
-                    <Dashboard path='/main/dashboard'/>
-                </Route>
-            </Sw>
-        </div>
+                        <IconButton color="inherit">
+                            <Badge color="secondary" >
+                                <ExitToAppIcon onClick={logout} />
+                            </Badge>
+                        </IconButton>
+                    </Toolbar>
+                </AppBar>
+                <Drawer
+                    variant="permanent"
+                    classes={{
+                        paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
+                    }}
+                    open={open}
+                >
+                    <div className={classes.toolbarIcon}>
+                        <IconButton onClick={handleDrawerClose}>
+                            <ChevronLeftIcon />
+                        </IconButton>
+                    </div>
+                    <Divider />
+                    <List>{mainListItems}</List>
+                    <Divider />
+                    <List>{secondaryListItems}</List>
+                </Drawer>
+                <Sw>
+                    <Route>
+                        <Dashboard />
+                    </Route>
+                    <Route>
+                        <Profile />
+                    </Route>
+                </Sw>
+            </div>
             <Box pt={4}>
                 <Copyright />
             </Box>

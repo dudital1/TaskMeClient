@@ -73,7 +73,7 @@ const Signin = () => {
             }else{
                 localStorage.setItem('storageUser',JSON.stringify(response.data.user));
                 localStorage.setItem('storageLogin',true);
-                history.push('/main')
+                history.push('/main');
             }
         }))
     }
