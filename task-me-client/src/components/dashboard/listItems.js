@@ -7,58 +7,62 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import PeopleIcon from '@material-ui/icons/People';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import AssignmentIcon from '@material-ui/icons/Assignment';
-import Link from '@material-ui/core/Link';
+import Divider from '@material-ui/core/Divider';
+import Drawer from "@material-ui/core/Drawer";
 
 
-export const mainListItems = (
-    <div>
-        <ListItem button>
-            <ListItemIcon>
-                <DashboardIcon>
-                    <Link exec to='/main/dashboard' />
-                </DashboardIcon>
-            </ListItemIcon>
-            <ListItemText primary="Dashboard" />
-        </ListItem>
-        <ListItem button>
-            <ListItemIcon>
-                <PeopleIcon>
-                    <Link exec to='/main/profile' />
-                </PeopleIcon>
-            </ListItemIcon>
-            <ListItemText primary="Profile" />
-        </ListItem>
-        <ListItem button>
-            <ListItemIcon>
-                <BarChartIcon >
-                    <Link exec to='/reports' />
-                </BarChartIcon>
-            </ListItemIcon>
-            <ListItemText primary="Reports" />
-        </ListItem>
-    </div>
-);
+const MainListItems =({setContent}) => {
 
-export const secondaryListItems = (
-    <div>
-        <ListSubheader inset>Saved reports</ListSubheader>
-        <ListItem button>
-            <ListItemIcon>
-                <AssignmentIcon />
-            </ListItemIcon>
-            <ListItemText primary="Current month" />
-        </ListItem>
-        <ListItem button>
-            <ListItemIcon>
-                <AssignmentIcon />
-            </ListItemIcon>
-            <ListItemText primary="Last quarter" />
-        </ListItem>
-        <ListItem button>
-            <ListItemIcon>
-                <AssignmentIcon />
-            </ListItemIcon>
-            <ListItemText primary="Year-end sale" />
-        </ListItem>
-    </div>
-);
+    return(
+        <div>
+            <ListItem button onClick={()=>{
+                setContent("dashboard")
+            }}>
+                <ListItemIcon>
+                    <DashboardIcon>
+                    </DashboardIcon>
+                </ListItemIcon>
+                <ListItemText primary="Dashboard" />
+            </ListItem>
+            <ListItem button onClick={()=>{
+                setContent("profile")
+            }}>
+                <ListItemIcon>
+                    <PeopleIcon>
+                    </PeopleIcon>
+                </ListItemIcon>
+                <ListItemText primary="Profile" />
+            </ListItem>
+            <ListItem button>
+                <ListItemIcon>
+                    <BarChartIcon >
+                    </BarChartIcon>
+                </ListItemIcon>
+                <ListItemText primary="Reports" />
+            </ListItem>
+
+            <Divider />
+
+            <ListSubheader inset>Saved reports</ListSubheader>
+            <ListItem button>
+                <ListItemIcon>
+                    <AssignmentIcon />
+                </ListItemIcon>
+                <ListItemText primary="Current month" />
+            </ListItem>
+            <ListItem button>
+                <ListItemIcon>
+                    <AssignmentIcon />
+                </ListItemIcon>
+                <ListItemText primary="Last quarter" />
+            </ListItem>
+            <ListItem button>
+                <ListItemIcon>
+                    <AssignmentIcon />
+                </ListItemIcon>
+                <ListItemText primary="Year-end sale" />
+            </ListItem>
+        </div>
+    );
+}
+export default MainListItems;
