@@ -17,7 +17,9 @@ import Avatar from '@material-ui/core/Avatar';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import { mainListItems, secondaryListItems } from './listItems';
+// import { mainListItems, secondaryListItems } from './listItems';
+import MainListItems from './listItems';
+
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import {
@@ -205,19 +207,21 @@ const Main = () => {
                             <ChevronLeftIcon />
                         </IconButton>
                     </div>
+
                     <Divider />
-                    <List>{mainListItems}</List>
+                    <List>
+                        <MainListItems/>
+                        </List>
                     <Divider />
-                    <List>{secondaryListItems}</List>
+                    {/* <List>{secondaryListItems}</List> */}
                 </Drawer>
                 <Sw>
-                    <Route>
-                        <Dashboard />
-                    </Route>
-                    <Route>
-                        <Profile />
-                    </Route>
+                        <Route exact path='/main/dashboard'>
+                            <Dashboard></Dashboard>
+                        </Route>
+                        <Route exact path='/profile' component={Profile} />
                 </Sw>
+
             </div>
             <Box pt={4}>
                 <Copyright />
