@@ -46,7 +46,7 @@ export default function OverallStats({tmpUser, category}) {
             <Typography component="p" variant="h4">
                 {category}
             </Typography>
-            <Title>{completedNumber?completedNumber:"Loading..."}/{categoryLength?categoryLength:"Loading..."}</Title>
+            <Title>{completedNumber?completedNumber:"0"}/{categoryLength?categoryLength:"0"}</Title>
             <Typography component="p" variant="h4">
             </Typography>
             <Typography color="textSecondary" className={classes.depositContext}>
