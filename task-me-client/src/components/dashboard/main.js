@@ -216,6 +216,7 @@ const Main = () => {
                             <ChevronLeftIcon />
                         </IconButton>
                     </div>
+
                     <Divider />
                     <MainListItems setContent={updateContent}/>
                     <Divider />
