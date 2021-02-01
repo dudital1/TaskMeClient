@@ -1,31 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import clsx from 'clsx';
-import {ThemeProvider, createMuiTheme, makeStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Drawer from '@material-ui/core/Drawer';
+import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
-import Switch from '@material-ui/core/Switch';
-
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import Badge from '@material-ui/core/Badge';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
-import Avatar from '@material-ui/core/Avatar';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import { mainListItems, secondaryListItems } from './listItems';
 import Chart from './Chart';
 import OverallStats from './OverallStats';
-import Orders from './Orders';
-import axios from "axios";
+import DataTable from './Orders';
 import { useHistory } from "react-router-dom";
 
 function Copyright() {
@@ -128,145 +112,63 @@ const Dashboard = () => {
     const [tasks, setTasks] = useState([]);
 
     const classes = useStyles();
-    const [open, setOpen] = React.useState(true);
-    const handleDrawerOpen = () => {
-        setOpen(true);
-    };
-    const handleDrawerClose = () => {
-        setOpen(false);
-    }
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
-    useEffect(() => {
-        axios.get("http://localhost:5500/auth/sign-in").then((response) => {
-            if (response.data.loggedIn === false) {
-                localStorage.clear();
-                history.push('/');
-            }
-            console.log(user)
-
-        }
-    )}, []);
-
-    function logout() {
-        axios.get('http://localhost:5500/auth/logout').then(() => {
-            localStorage.clear();
-            history.push('/');
-        })
-    }
-    const [darkMode,setDarkMode] = useState(false)
-    const theme = createMuiTheme({
-        palette:{
-            type: darkMode? "dark":"light",
-        },
-    });
-
     return (
-        <ThemeProvider theme={theme}>
-        <div className={classes.root}>
-            <CssBaseline />
-            <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
-                <Toolbar className={classes.toolbar}>
-                    <IconButton
-                        edge="start"
-                        color="inherit"
-                        aria-label="open drawer"
-                        onClick={handleDrawerOpen}
-                        className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-                        {user ? user.name.toUpperCase() : ""}
-                    </Typography>
-                    Dark Mode
-                    <Switch checked={darkMode} onChange={() => setDarkMode(!darkMode)}></Switch>
-                    <Avatar alt="Remy Sharp" src={user.picture} />
-
-                    <IconButton color="inherit">
-                        <Badge color="secondary" >
-                            <ExitToAppIcon onClick={logout} />
-                        </Badge>
-                    </IconButton>
-                </Toolbar>
-            </AppBar>
-            <Drawer
-                variant="permanent"
-                classes={{
-                    paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
-                }}
-                open={open}
-            >
-                <div className={classes.toolbarIcon}>
-                    <IconButton onClick={handleDrawerClose}>
-                        <ChevronLeftIcon />
-                    </IconButton>
-                </div>
-                <Divider />
-                <List>{mainListItems}</List>
-                <Divider />
-                <List>{secondaryListItems}</List>
-            </Drawer>
-            <main className={classes.content}>
-                <div className={classes.appBarSpacer} />
-                <Container maxWidth="lg" className={classes.container}>
-                    <Grid container spacing={3}>
-                        <Grid item xs={12} md={4} lg={3}>
-                            <Paper className={fixedHeightPaper}>
-                                <OverallStats tmpUser={user} category={"Meeting"}/>
-                            </Paper>
-                        </Grid>
-                        <Grid item xs={12} md={4} lg={3}>
-                            <Paper className={fixedHeightPaper}>
-                                <OverallStats tmpUser={user} category={"Training"} />
-                            </Paper>
-                        </Grid>
-                        <Grid item xs={12} md={4} lg={3}>
-                            <Paper className={fixedHeightPaper}>
-                                <OverallStats tmpUser={user} category={"Education"}/>
-                            </Paper>
-                        </Grid>
-                        <Grid item xs={12} md={4} lg={3}>
-                            <Paper className={fixedHeightPaper}>
-                                <OverallStats tmpUser={user} category={"General"}/>
-                            </Paper>
-                        </Grid>
-                        <Grid item xs={12} md={4} lg={3}>
-                            <Paper className={fixedHeightPaper}>
-                                <OverallStats tmpUser={user} category={"Home"}/>
-                            </Paper>
-                        </Grid>
-                        <Grid item xs={12} md={4} lg={3}>
-                            <Paper className={fixedHeightPaper}>
-                                <OverallStats tmpUser={user} category={"All"}/>
-                            </Paper>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Paper className={classes.paper}>
-                                <Orders tmpUser={user}/>
-                            </Paper>
-                        </Grid>
-                        {/* Chart */}
-                        <Grid item xs={12} md={8} lg={9}>
-                            <Paper className={fixedHeightPaper}>
-                                <Chart  tmpUser ={user}/>
-                            </Paper>
-                        </Grid>
-                        {/* Recent Deposits
-                        <Grid item xs={12} md={4} lg={3}>
-                            <Paper className={fixedHeightPaper}>
-                                <OverallStats />
-                            </Paper>
-                        </Grid> */}
-
-                    </Grid>
-                    <Box pt={4}>
-                        <Copyright />
-                    </Box>
-                </Container>
-            </main>
-        </div>
-        </ThemeProvider>
+        <main className={classes.content}>
+        <div className={classes.appBarSpacer} />
+        <Container maxWidth="lg" className={classes.container}>
+            <Grid container spacing={3}>
+                <Grid item xs={12} md={4} lg={3}>
+                    <Paper className={fixedHeightPaper}>
+                        <OverallStats tmpUser={user} category={"Meeting"}/>
+                    </Paper>
+                </Grid>
+                <Grid item xs={12} md={4} lg={3}>
+                    <Paper className={fixedHeightPaper}>
+                        <OverallStats tmpUser={user} category={"Training"} />
+                    </Paper>
+                </Grid>
+                <Grid item xs={12} md={4} lg={3}>
+                    <Paper className={fixedHeightPaper}>
+                        <OverallStats tmpUser={user} category={"Education"}/>
+                    </Paper>
+                </Grid>
+                <Grid item xs={12} md={4} lg={3}>
+                    <Paper className={fixedHeightPaper}>
+                        <OverallStats tmpUser={user} category={"General"}/>
+                    </Paper>
+                </Grid>
+                <Grid item xs={12} md={4} lg={3}>
+                    <Paper className={fixedHeightPaper}>
+                        <OverallStats tmpUser={user} category={"Home"}/>
+                    </Paper>
+                </Grid>
+                <Grid item xs={12} md={4} lg={3}>
+                    <Paper className={fixedHeightPaper}>
+                        <OverallStats tmpUser={user} category={"All"}/>
+                    </Paper>
+                </Grid>
+                <Grid item xs={12}>
+                    <Paper className={classes.paper}>
+                        <DataTable tmpUser={user}/>
+                    </Paper>
+                </Grid>
+                <Grid item xs={12} md={8} lg={9}>
+                    <Paper className={fixedHeightPaper}>
+                        <Chart  tmpUser ={user}/>
+                    </Paper>
+                </Grid>
+            </Grid>
+            <Box pt={4}>
+                <Copyright />
+            </Box>
+        </Container>
+    </main>
     );
 };
 export default Dashboard;
+
+
+
+

@@ -1,9 +1,11 @@
 import React from 'react';
 import axios from 'axios';
 import { useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 
 const VerifyLink = () => {
+    let history = useHistory();
     let { token } = useParams();
     //impliment axios req here 
     const verify = () => {
@@ -11,6 +13,7 @@ const VerifyLink = () => {
             token: token
         }).then((response => {
             console.log(JSON.stringify(response.data));
+            history.push('/');
         }))
     }
     return (

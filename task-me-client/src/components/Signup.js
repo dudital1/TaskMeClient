@@ -66,7 +66,7 @@ const Signup = () => {
             name: nameReg,
         }).then((response => {
             console.log(JSON.stringify(response.data));
-            history.push('/')
+            history.push('/');
         }))
     }
     useEffect(() => {

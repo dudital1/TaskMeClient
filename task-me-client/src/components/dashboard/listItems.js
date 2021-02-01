@@ -7,24 +7,32 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import PeopleIcon from '@material-ui/icons/People';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import AssignmentIcon from '@material-ui/icons/Assignment';
+import Link from '@material-ui/core/Link';
+
 
 export const mainListItems = (
     <div>
         <ListItem button>
             <ListItemIcon>
-                <DashboardIcon />
+                <DashboardIcon>
+                    <Link exec to='/main/dashboard' />
+                </DashboardIcon>
             </ListItemIcon>
             <ListItemText primary="Dashboard" />
         </ListItem>
         <ListItem button>
             <ListItemIcon>
-                <PeopleIcon />
+                <PeopleIcon>
+                    <Link exec to='/profile' />
+                </PeopleIcon>
             </ListItemIcon>
             <ListItemText primary="Profile" />
         </ListItem>
         <ListItem button>
             <ListItemIcon>
-                <BarChartIcon />
+                <BarChartIcon >
+                    <Link exec to='/reports' />
+                </BarChartIcon>
             </ListItemIcon>
             <ListItemText primary="Reports" />
         </ListItem>

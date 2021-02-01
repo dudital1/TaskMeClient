@@ -73,7 +73,7 @@ const Signin = () => {
             }else{
                 localStorage.setItem('storageUser',JSON.stringify(response.data.user));
                 localStorage.setItem('storageLogin',true);
-                history.push('/dashboard')
+                history.push('/main')
             }
         }))
     }
@@ -94,7 +94,7 @@ const Signin = () => {
         }).then(response => {
             localStorage.setItem('storageUser',JSON.stringify(response.data.user));
             localStorage.setItem('storageLogin',true);
-            history.push('/dashboard');
+            history.push('/main');
         })
     }
 
