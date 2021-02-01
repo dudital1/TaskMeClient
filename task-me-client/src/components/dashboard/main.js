@@ -19,7 +19,6 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 // import { mainListItems, secondaryListItems } from './listItems';
 import MainListItems from './listItems';
-
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import {
@@ -129,7 +128,7 @@ const Main = () => {
     let history = useHistory();
     const user = JSON.parse(localStorage.getItem("storageUser"));
     const [tasks, setTasks] = useState([]);
-
+    const [content , setContent] = useState("dashboard")
     const classes = useStyles();
     const [open, setOpen] = React.useState(true);
     const handleDrawerOpen = () => {
@@ -138,7 +137,7 @@ const Main = () => {
     const handleDrawerClose = () => {
         setOpen(false);
     }
-    const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+    // const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
     useEffect(() => {
         axios.get("http://localhost:5500/auth/sign-in").then((response) => {
@@ -158,6 +157,17 @@ const Main = () => {
             history.push('/');
         })
     }
+    function updateContent(tmpContent){
+        setContent(tmpContent)
+    }
+    function switchContent(){
+        if(content==="dashboard")
+            return <Dashboard />
+        if (content==="profile")
+            return <Profile />
+    }
+
+
     const [darkMode, setDarkMode] = useState(false)
     const theme = createMuiTheme({
         palette: {
@@ -167,7 +177,6 @@ const Main = () => {
 
     return (
         <ThemeProvider theme={theme}>
-
             <div className={classes.root}>
                 <CssBaseline />
                 <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
@@ -209,25 +218,16 @@ const Main = () => {
                     </div>
 
                     <Divider />
-                    <List>
-                        <MainListItems/>
-                        </List>
+                    <MainListItems setContent={updateContent}/>
                     <Divider />
-                    {/* <List>{secondaryListItems}</List> */}
+                    {/*<List>{secondaryListItems}</List>*/}
                 </Drawer>
-                <Sw>
-                        <Route exact path='/main/dashboard'>
-                            <Dashboard></Dashboard>
-                        </Route>
-                        <Route exact path='/profile' component={Profile} />
-                </Sw>
-
+                {switchContent()}
             </div>
             <Box pt={4}>
                 <Copyright />
             </Box>
         </ThemeProvider>
-
     );
 };
 export default Main;

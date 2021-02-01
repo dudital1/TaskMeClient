@@ -7,25 +7,28 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import PeopleIcon from '@material-ui/icons/People';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import AssignmentIcon from '@material-ui/icons/Assignment';
-import Link from '@material-ui/core/Link';
-import { useHistory } from "react-router-dom";
+import Divider from '@material-ui/core/Divider';
+import Drawer from "@material-ui/core/Drawer";
 
 
-const MainListItems = () => {
-    let history = useHistory();
-    return (
+const MainListItems =({setContent}) => {
+
+    return(
         <div>
-            <ListItem button onClick={() => { history.push('/main/dashboard') }}>
+            <ListItem button onClick={()=>{
+                setContent("dashboard")
+            }}>
                 <ListItemIcon>
                     <DashboardIcon>
                     </DashboardIcon>
                 </ListItemIcon>
                 <ListItemText primary="Dashboard" />
             </ListItem>
-            <ListItem button>
+            <ListItem button onClick={()=>{
+                setContent("profile")
+            }}>
                 <ListItemIcon>
                     <PeopleIcon>
-                        <Link exact to='/main/profile' />
                     </PeopleIcon>
                 </ListItemIcon>
                 <ListItemText primary="Profile" />
@@ -33,36 +36,33 @@ const MainListItems = () => {
             <ListItem button>
                 <ListItemIcon>
                     <BarChartIcon >
-                        <Link exact to='/reports' />
                     </BarChartIcon>
                 </ListItemIcon>
                 <ListItemText primary="Reports" />
             </ListItem>
-        </div>
-    )
-};
-export default MainListItems;
 
-// export const secondaryListItems = (
-//     <div>
-//         <ListSubheader inset>Saved reports</ListSubheader>
-//         <ListItem button>
-//             <ListItemIcon>
-//                 <AssignmentIcon />
-//             </ListItemIcon>
-//             <ListItemText primary="Current month" />
-//         </ListItem>
-//         <ListItem button>
-//             <ListItemIcon>
-//                 <AssignmentIcon />
-//             </ListItemIcon>
-//             <ListItemText primary="Last quarter" />
-//         </ListItem>
-//         <ListItem button>
-//             <ListItemIcon>
-//                 <AssignmentIcon />
-//             </ListItemIcon>
-//             <ListItemText primary="Year-end sale" />
-//         </ListItem>
-//     </div>
-// );
+            <Divider />
+
+            <ListSubheader inset>Saved reports</ListSubheader>
+            <ListItem button>
+                <ListItemIcon>
+                    <AssignmentIcon />
+                </ListItemIcon>
+                <ListItemText primary="Current month" />
+            </ListItem>
+            <ListItem button>
+                <ListItemIcon>
+                    <AssignmentIcon />
+                </ListItemIcon>
+                <ListItemText primary="Last quarter" />
+            </ListItem>
+            <ListItem button>
+                <ListItemIcon>
+                    <AssignmentIcon />
+                </ListItemIcon>
+                <ListItemText primary="Year-end sale" />
+            </ListItem>
+        </div>
+    );
+}
+export default MainListItems;
