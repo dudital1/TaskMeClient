@@ -9,7 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
 import Chart from './Chart';
 import OverallStats from './OverallStats';
-import TaskTable from './TasksTable'
+import TaskTable from './TableOfTasks/TasksTable'
 // import { useHistory } from "react-router-dom";
 
 const drawerWidth = 240;

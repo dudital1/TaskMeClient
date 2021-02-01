@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
-import clsx from 'clsx';
-import { lighten, makeStyles } from '@material-ui/core/styles';
+// import clsx from 'clsx';
+import { lighten, makeStyles,fade } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -10,14 +10,10 @@ import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
-import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip';
-import DeleteIcon from '@material-ui/icons/Delete';
-import FilterListIcon from '@material-ui/icons/FilterList';
+import EnhancedTableToolbar from './HeadTable'
+
 import axios from "axios";
 import {Box} from "@material-ui/core";
 
@@ -34,7 +30,6 @@ function descendingComparator(a, b, orderBy) {
     }
     return 0;
 }
-
 function getComparator(order, orderBy) {
     return order === 'desc'
         ? (a, b) => descendingComparator(a, b, orderBy)
@@ -50,7 +45,6 @@ function stableSort(array, comparator) {
     });
     return stabilizedThis.map((el) => el[0]);
 }
-
 const headCells = [
     { id: 'name', numeric: false, disablePadding: true, label: 'Task Name' },
     { id: 'status', numeric: true, disablePadding: false, label: 'Status' },
@@ -112,66 +106,6 @@ EnhancedTableHead.propTypes = {
     rowCount: PropTypes.number.isRequired,
 };
 
-const useToolbarStyles = makeStyles((theme) => ({
-    root: {
-        paddingLeft: theme.spacing(2),
-        paddingRight: theme.spacing(1),
-    },
-    highlight:
-        theme.palette.type === 'light'
-            ? {
-                color: theme.palette.secondary.main,
-                backgroundColor: lighten(theme.palette.secondary.light, 0.85),
-            }
-            : {
-                color: theme.palette.text.primary,
-                backgroundColor: theme.palette.secondary.dark,
-            },
-    title: {
-        flex: '1 1 100%',
-    },
-}));
-
-const EnhancedTableToolbar = (props) => {
-    const classes = useToolbarStyles();
-    const { numSelected } = props;
-
-    return (
-        <Toolbar
-            className={clsx(classes.root, {
-                [classes.highlight]: numSelected > 0,
-            })}
-        >
-            {numSelected > 0 ? (
-                <Typography className={classes.title} color="inherit" variant="subtitle1" component="div">
-                    {numSelected} selected
-                </Typography>
-            ) : (
-                <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
-                    All Tasks
-                </Typography>
-            )}
-
-            {numSelected > 0 ? (
-                <Tooltip title="Delete">
-                    <IconButton aria-label="delete">
-                        <DeleteIcon />
-                    </IconButton>
-                </Tooltip>
-            ) : (
-                <Tooltip title="Filter list">
-                    <IconButton aria-label="filter list">
-                        <FilterListIcon />
-                    </IconButton>
-                </Tooltip>
-            )}
-        </Toolbar>
-    );
-};
-
-EnhancedTableToolbar.propTypes = {
-    numSelected: PropTypes.number.isRequired,
-};
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -195,13 +129,29 @@ const useStyles = makeStyles((theme) => ({
         top: 20,
         width: 1,
     },
+    searchIcon: {
+        padding: theme.spacing(0, 2),
+        height: '100%',
+        position: 'absolute',
+        pointerEvents: 'none',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    search: {
+        position: 'relative',
+        borderRadius: theme.shape.borderRadius,
+        backgroundColor: fade(theme.palette.common.white, 0.15),
+        '&:hover': {
+            backgroundColor: fade(theme.palette.common.white, 0.25),
+        },
+    }
 }));
 
-export default function EnhancedTable({tmpUser}) {
+export default function TaskTable({tmpUser}) {
 
     const [tasks, setTasks] = useState([])
     const [rows, setTmpRows] = useState([])
-
     const classes = useStyles();
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('category');
@@ -217,9 +167,18 @@ export default function EnhancedTable({tmpUser}) {
                 setTasks(response.data)
             })))
     }
+    const getTasksSearch = (serchWord) => {
+        return(
+            axios.post(`http://localhost:5500/api/tasks/search/`, {
+                email: tmpUser.email,
+                searchBy:serchWord,
+            }).then((response => {
+                setTasks(response.data)
+            })))
+    }
 
     function createRows(){
-        if (tasks.length>0) {
+        if (tasks.length>0 && rows.length<1) {
             let tmpArr = []
             tasks.map(task => (
                 tmpArr.push(createData(task.taskName, task.status, task.category,task.startTime, task.durationMin,task._id))
@@ -281,16 +240,35 @@ export default function EnhancedTable({tmpUser}) {
         setPage(0);
     };
 
+
     const isSelected = (name) => selected.indexOf(name) !== -1;
 
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+
+    function searchTasks(searchWord){
+        let tmpArr = []
+        if(searchWord.length>1) {
+            getTasksSearch(searchWord).then(
+                tasks.map(task => (
+                    tmpArr.push(createData(task.taskName, task.status, task.category, task.startTime, task.durationMin, task._id))
+                )),
+                setTmpRows([...tmpArr]));
+        }
+        else {
+            getAllTasks().then(
+                tasks.map(task => (
+                    tmpArr.push(createData(task.taskName, task.status, task.category, task.startTime, task.durationMin, task._id))
+                )),
+                setTmpRows([...tmpArr]));
+        }
+    }
 
     return (
         <div className={classes.root}>
 
 
             <Paper className={classes.paper}>
-                <EnhancedTableToolbar numSelected={selected.length} />
+                <EnhancedTableToolbar numSelected={selected.length} search={searchTasks}  />
                 <TableContainer>
                     <Table
                         className={classes.table}
