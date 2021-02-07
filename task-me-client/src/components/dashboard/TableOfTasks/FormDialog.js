@@ -9,13 +9,24 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 import axios from 'axios';
-
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
 
 
 export default function FormDialog({ task }) {
-    const currentTask = task;
+    const currentTask =   {
+        "status": "New",
+        "category": "Training",
+        "_id": "60142836eed672a6376dd545",
+        "taskName": "Blackstone GSO blue Long Short Credit Income Fund",
+        "userEmail": "saarpr@gmail.com",
+        "durationMin": 120,
+        "startTime": "2020-06-30T21:00:00.000Z",
+        "endTime": "2020-10-06T21:00:00.000Z",
+        "description": "Lemur catta"
+    };
     const [open, setOpen] = React.useState(false);
-    
     const [name, setName] = React.useState(currentTask.taskName);
     const [duration, setDuration] = React.useState(currentTask.durationMin);
     const [time, setTime] = React.useState(currentTask.startTime);
@@ -31,9 +42,14 @@ export default function FormDialog({ task }) {
         setOpen(false);
     };
     const handleUpdate = () => {
-        let updatedTask = { taskName:name , durationMin:duration , startTime:time , description:description , status:status , category:category};
         axios.put(`http://localhost:5500/api/tasks`, {
-            _id: currentTask._id
+            _id: currentTask._id,
+            taskName:name ,
+            durationMin:duration ,
+            startTime:time ,
+            description:description ,
+            status:status ,
+            category:category
         }).then((response => {
             if(response.data.message === 'succesful'){
                 console.log('update succesful');
@@ -130,10 +146,10 @@ export default function FormDialog({ task }) {
                     </Select>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleUpdate} color="primary">
+                    <Button onClick={handleClose} color="primary">
                         Cancel
                     </Button>
-                    <Button onClick={handleClose} color="primary">
+                    <Button  onClick={handleUpdate} color="primary">
                         Update
                     </Button>
                 </DialogActions>

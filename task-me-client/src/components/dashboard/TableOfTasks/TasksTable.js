@@ -13,6 +13,7 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 import EnhancedTableToolbar from './HeadTable'
+import FormDialog from "./FormDialog";
 
 import axios from "axios";
 import {Box} from "@material-ui/core";
