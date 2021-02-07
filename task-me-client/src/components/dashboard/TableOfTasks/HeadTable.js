@@ -10,6 +10,9 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import FilterListIcon from "@material-ui/icons/FilterList";
 import PropTypes from "prop-types";
 import React from "react";
+import FormDialog from "./FormDialog";
+import TableRow from "@material-ui/core/TableRow";
+
 
 const useToolbarStyles = makeStyles((theme) => ({
     root: {
@@ -92,7 +95,7 @@ const EnhancedTableToolbar = ({numSelected ,search}) => {
                     All Tasks
                 </Typography>
             )}
-            {value}
+            <FormDialog />
             <div className={classes.search}>
                 <div className={classes.searchIcon}>
                     <SearchIcon />
