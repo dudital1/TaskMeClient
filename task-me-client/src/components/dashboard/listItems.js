@@ -8,7 +8,7 @@ import PeopleIcon from '@material-ui/icons/People';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import Divider from '@material-ui/core/Divider';
-import Drawer from "@material-ui/core/Drawer";
+// import Drawer from "@material-ui/core/Drawer";
 
 
 const MainListItems =({setContent}) => {
@@ -33,12 +33,14 @@ const MainListItems =({setContent}) => {
                 </ListItemIcon>
                 <ListItemText primary="Profile" />
             </ListItem>
-            <ListItem button>
+            <ListItem button onClick={()=>{
+                setContent("Stats")
+            }}>
                 <ListItemIcon>
                     <BarChartIcon >
                     </BarChartIcon>
                 </ListItemIcon>
-                <ListItemText primary="Reports" />
+                <ListItemText primary="Stats" />
             </ListItem>
 
             <Divider />

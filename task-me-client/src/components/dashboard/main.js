@@ -7,7 +7,7 @@ import Switch from '@material-ui/core/Switch';
 
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
+// import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
@@ -21,14 +21,15 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import MainListItems from './listItems';
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-import {
-    BrowserRouter as Router,
-    Route, Switch as Sw,
-} from "react-router-dom";
+// import {
+//     BrowserRouter as Router,
+//     Route, Switch as Sw,
+// } from "react-router-dom";
 import Dashboard from './Dashboard';
 import Box from "@material-ui/core/Box";
-import Container from "@material-ui/core/Container";
+// import Container from "@material-ui/core/Container";
 import Profile from './profile';
+import Stats from './Stats';
 
 function Copyright() {
     return (
@@ -127,7 +128,7 @@ const Main = () => {
 
     let history = useHistory();
     const user = JSON.parse(localStorage.getItem("storageUser"));
-    const [tasks, setTasks] = useState([]);
+    // const [tasks, setTasks] = useState([]);
     const [content , setContent] = useState("dashboard")
     const classes = useStyles();
     const [open, setOpen] = React.useState(true);
@@ -165,6 +166,8 @@ const Main = () => {
             return <Dashboard />
         if (content==="profile")
             return <Profile />
+        if (content==="Stats")
+            return <Stats />
     }
 
 

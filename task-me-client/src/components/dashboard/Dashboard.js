@@ -1,14 +1,10 @@
 import React from 'react';
-import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import Link from '@material-ui/core/Link';
-import Chart from './Chart';
-import OverallStats from './OverallStats';
+import Calender from './calender';
+// import OverallStats from './OverallStats';
 import TaskTable from './TableOfTasks/TasksTable'
 // import { useHistory } from "react-router-dom";
 
@@ -100,51 +96,20 @@ const Dashboard = () => {
     // const [tasks, setTasks] = useState([]);
 
     const classes = useStyles();
-    const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
     return (
         <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
             <Grid container spacing={3}>
-                <Grid item xs={12} md={4} lg={3}>
-                    <Paper className={fixedHeightPaper}>
-                        <OverallStats tmpUser={user} category={"Meeting"}/>
-                    </Paper>
-                </Grid>
-                <Grid item xs={12} md={4} lg={3}>
-                    <Paper className={fixedHeightPaper}>
-                        <OverallStats tmpUser={user} category={"Training"} />
-                    </Paper>
-                </Grid>
-                <Grid item xs={12} md={4} lg={3}>
-                    <Paper className={fixedHeightPaper}>
-                        <OverallStats tmpUser={user} category={"Education"}/>
-                    </Paper>
-                </Grid>
-                <Grid item xs={12} md={4} lg={3}>
-                    <Paper className={fixedHeightPaper}>
-                        <OverallStats tmpUser={user} category={"General"}/>
-                    </Paper>
-                </Grid>
-                <Grid item xs={12} md={4} lg={3}>
-                    <Paper className={fixedHeightPaper}>
-                        <OverallStats tmpUser={user} category={"Home"}/>
-                    </Paper>
-                </Grid>
-                <Grid item xs={12} md={4} lg={3}>
-                    <Paper className={fixedHeightPaper}>
-                        <OverallStats tmpUser={user} category={"All"}/>
-                    </Paper>
-                </Grid>
                 <Grid item xs={12}>
                     <Paper className={classes.paper}>
                         <TaskTable tmpUser={user}/>
                     </Paper>
                 </Grid>
-                <Grid item xs={12} md={8} lg={9}>
-                    <Paper className={fixedHeightPaper}>
-                        <Chart  tmpUser ={user}/>
+                <Grid item >
+                    <Paper >
+                        <Calender tmpUser={user} />
                     </Paper>
                 </Grid>
             </Grid>
