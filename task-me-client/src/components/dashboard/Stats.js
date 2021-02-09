@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import OverallStats from './OverallStats';
 import clsx from 'clsx';
+import PieChart from './piChart';
 
 const useStyles = makeStyles((theme) => ({
     appBarSpacer: theme.mixins.toolbar,
@@ -20,14 +21,14 @@ const useStyles = makeStyles((theme) => ({
     paper: {
         padding: theme.spacing(2),
         display: 'flex',
+        justifyContent: 'space_between',
         flexWrap: 'wrap'
-        // overflow: 'auto',
     },
     fixedHeight: {
         height: 240,
         display: 'flex', 
         flexDirection: 'column', 
-        margin: '10px'
+        marginBottom: '15px'
     },
 }));
 
@@ -41,41 +42,45 @@ const Stats = () => {
     const classes = useStyles();
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
-
     return (
         <main className={classes.content}>
             <div className={classes.appBarSpacer} />
             <Container maxWidth="lg" className={classes.container}>
                 <Grid container spacing={3}>
                     <Paper className={classes.paper}>
-                        <Grid item xs={12} md={4} lg={3}>
+                        <Grid item xs={12} md={4} lg={4}>
                             <Paper className={fixedHeightPaper}>
                                 <OverallStats tmpUser={user} category={"Meeting"} />
                             </Paper>
                         </Grid>
-                        <Grid item xs={12} md={4} lg={3}>
+                        <Grid item xs={12} md={4} lg={4}>
                             <Paper className={fixedHeightPaper}>
                                 <OverallStats tmpUser={user} category={"Training"} />
                             </Paper>
                         </Grid>
-                        <Grid item xs={12} md={4} lg={3}>
+                        <Grid item xs={12} md={4} lg={4}>
                             <Paper className={fixedHeightPaper}>
                                 <OverallStats tmpUser={user} category={"Education"} />
                             </Paper>
                         </Grid>
-                        <Grid item xs={12} md={4} lg={3}>
+                        <Grid item xs={12} md={4} lg={4}>
                             <Paper className={fixedHeightPaper}>
                                 <OverallStats tmpUser={user} category={"General"} />
                             </Paper>
                         </Grid>
-                        <Grid item xs={12} md={4} lg={3}>
+                        <Grid item xs={12} md={4} lg={4}>
                             <Paper className={fixedHeightPaper}>
                                 <OverallStats tmpUser={user} category={"Home"} />
                             </Paper>
                         </Grid>
-                        <Grid item xs={12} md={4} lg={3}>
+                        <Grid item xs={12} md={4} lg={4}>
                             <Paper className={fixedHeightPaper}>
                                 <OverallStats tmpUser={user} category={"All"} />
+                            </Paper>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Paper>
+                                <PieChart tmpUser={user}/>
                             </Paper>
                         </Grid>
                     </Paper>
