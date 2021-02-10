@@ -8,10 +8,13 @@ import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import FilterListIcon from "@material-ui/icons/FilterList";
+import PlaylistAddOutlinedIcon from '@material-ui/icons/PlaylistAddOutlined';
 import PropTypes from "prop-types";
 import React from "react";
 import FormDialog from "./FormDialog";
 // import TableRow from "@material-ui/core/TableRow";
+import axios from "axios";
+import EditIcon from "@material-ui/icons/Edit";
 
 
 const useToolbarStyles = makeStyles((theme) => ({
@@ -73,12 +76,23 @@ const useToolbarStyles = makeStyles((theme) => ({
     },
 }));
 
-const EnhancedTableToolbar = ({numSelected ,search}) => {
+const EnhancedTableToolbar = ({selected,numSelected ,search}) => {
     // const [value, setValue] = React.useState()
     const classes = useToolbarStyles();
     function triggerSearch (tmpValue) {
         // setValue(tmpValue)
         search(tmpValue)
+    };
+    function deletSelected(){
+        selected.map(task => {
+            axios.delete(`http://localhost:5500/api/tasks/${task}`).then((response => {
+                if (response.data.deletedCount!=0) {
+                    console.log("Task deleted!!");
+                } else {
+                    console.log('Failed to delete task');
+                }
+            }))
+        })
     };
     return (
         <Toolbar
@@ -95,7 +109,10 @@ const EnhancedTableToolbar = ({numSelected ,search}) => {
                     All Tasks
                 </Typography>
             )}
-            <FormDialog task={{"taskName" : "dudi"}}/>
+            <IconButton variant="outlined" color="primary" >
+                <PlaylistAddOutlinedIcon />
+            </IconButton>
+            <FormDialog task={selected} numSelected={numSelected}/>
             <div className={classes.search}>
                 <div className={classes.searchIcon}>
                     <SearchIcon />
@@ -112,17 +129,12 @@ const EnhancedTableToolbar = ({numSelected ,search}) => {
             </div>
             {numSelected > 0 ? (
                 <Tooltip title="Delete">
-                    <IconButton aria-label="delete">
+                    <IconButton aria-label="delete" onClick={deletSelected}>
+
                         <DeleteIcon />
                     </IconButton>
                 </Tooltip>
-            ) : (
-                <Tooltip title="Filter list">
-                    <IconButton aria-label="filter list">
-                        <FilterListIcon />
-                    </IconButton>
-                </Tooltip>
-            )}
+            ) : (<div></div>)}
         </Toolbar>
     );
 };
