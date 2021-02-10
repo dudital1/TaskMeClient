@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -13,30 +13,35 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import { makeStyles } from '@material-ui/core/styles';
+import Toolbar from "@material-ui/core/Toolbar";
 
 const useStyles = makeStyles(({
 
     dialogForm: {
+        height:"700px",
+        width:"500px",
         display: "flex" , 
         flexDirection: "column" ,
     }
 }));
 
-export default function FormDialog({ task }) {
-    const currentTask = task;
+export default function FormDialog({ task, numSelected }) {
+    const [currentTask, setCurrentTask] = useState({});
     const [open, setOpen] = React.useState(false);
-    const [name, setName] = React.useState(currentTask.taskName);
-    const [duration, setDuration] = React.useState(currentTask.durationMin);
-    const [time, setTime] = React.useState(currentTask.startTime);
-    const [description, setDescription] = React.useState(currentTask.description);
-    const [status, setStatus] = React.useState(currentTask.status);
-    const [category, setCategory] = React.useState(currentTask.category);
-
     const classes = useStyles();
 
-
     const handleClickOpen = () => {
-        setOpen(true);
+        if (numSelected>1){
+            alert("Can't edit more than 1 task.")
+
+        }
+        else if(numSelected==0){
+            alert("Choose a task to edit.")
+        }
+        else {
+            loadTask(task)
+            setOpen(true);
+        }
     };
 
     const handleClose = () => {
@@ -46,15 +51,21 @@ export default function FormDialog({ task }) {
     };
     const handleUpdate = () => {
         console.log(currentTask);
-        console.log(task);
+        console.log("taks",task);
+        console.log("taskName",currentTask.taskName);
+        console.log("duration",currentTask.durationMin);
+        console.log("startTime",currentTask.startTime);
+        console.log("description",currentTask.description);
+        console.log("status",currentTask.status);
+        console.log("category",currentTask.category);
         axios.put(`http://localhost:5500/api/tasks`, {
-            _id: currentTask._id,
-            taskName: name,
-            durationMin: duration,
-            startTime: time,
-            description: description,
-            status: status,
-            category: category
+            _id: task,
+            taskName: currentTask.taskName,
+            durationMin: currentTask.durationMin,
+            startTime: currentTask.startTime,
+            description: currentTask.description,
+            status: currentTask.status,
+            category: currentTask.category
         }).then((response => {
             if (response.data.message === 'succesful') {
                 console.log('update succesful');
@@ -62,6 +73,18 @@ export default function FormDialog({ task }) {
                 console.log('update failed');
             }
             handleClose();
+        }))
+
+    };
+
+    const loadTask = (task) => {
+        axios.get(`http://localhost:5500/api/tasks/view/${task}`).then((response => {
+            if (response.data) {
+                setCurrentTask(response.data)
+                console.log("Task loaded!!",response.data);
+            } else {
+                console.log('failed to load task');
+            }
         }))
 
     };
@@ -84,8 +107,8 @@ export default function FormDialog({ task }) {
                         id="taskName"
                         label="Task Name"
                         type="text"
-                        value={name}
-                        onChange={event => { setName(event.target.value) }}
+                        value={currentTask.taskName}
+                        onChange={event => { setCurrentTask({...currentTask, taskName:event.target.value })}}
                     />
                     <TextField
                         required
@@ -94,8 +117,8 @@ export default function FormDialog({ task }) {
                         id="duration"
                         label="Duration"
                         type="number"
-                        value={duration}
-                        onChange={event => { setDuration(event.target.value) }}
+                        value={currentTask.durationMin}
+                        onChange={event => { setCurrentTask({...currentTask, durationMin:event.target.value })}}
 
                     />
                     <TextField
@@ -106,8 +129,8 @@ export default function FormDialog({ task }) {
                         label="Start date and time"
                         type="datetime-local"
                         defaultValue="2021-02-23T17:00"
-                        value={time}
-                        onChange={event => { setTime(event.target.value) }}
+                        value={currentTask.startTime}
+                        onChange={event => { setCurrentTask({...currentTask, startTime:event.target.value })}}
 
                     />
                     <TextField
@@ -117,8 +140,8 @@ export default function FormDialog({ task }) {
                         id="description"
                         label="Description"
                         type="text"
-                        value={description}
-                        onChange={event => { setDescription(event.target.value) }}
+                        value={currentTask.description}
+                        onChange={event => { setCurrentTask({...currentTask, description:event.target.value })}}
 
                     />
                     <InputLabel id="statusSelectLabel">
@@ -127,8 +150,8 @@ export default function FormDialog({ task }) {
                     <Select
                         labelId="statusSelectLabel"
                         id="statusSelect"
-                        value={status}
-                        onChange={event => { setStatus(event.target.value) }}
+                        value={currentTask.status}
+                        onChange={event => { setCurrentTask({...currentTask, status:event.target.value })}}
                     >
                         <MenuItem value={'In progress'}>In progress</MenuItem>
                         <MenuItem value={'New'}>New</MenuItem>
@@ -140,8 +163,8 @@ export default function FormDialog({ task }) {
                     <Select
                         labelId="categorySelectLabel"
                         id="categorySelect"
-                        value={category}
-                        onChange={event => { setCategory(event.target.value) }}
+                        value={currentTask.category}
+                        onChange={event => { setCurrentTask({...currentTask, category:event.target.value })}}
                     >
                         <MenuItem value={'Education'}>Education</MenuItem>
                         <MenuItem value={'Training'}>Training</MenuItem>
