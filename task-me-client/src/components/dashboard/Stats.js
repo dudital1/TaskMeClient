@@ -6,6 +6,8 @@ import Paper from '@material-ui/core/Paper';
 import OverallStats from './OverallStats';
 import clsx from 'clsx';
 import PieChart from './piChart';
+import StackChart from './stackChart';
+
 
 const useStyles = makeStyles((theme) => ({
     appBarSpacer: theme.mixins.toolbar,
@@ -78,9 +80,14 @@ const Stats = () => {
                                 <OverallStats tmpUser={user} category={"All"} />
                             </Paper>
                         </Grid>
-                        <Grid item xs={12}>
+                        <Grid item xs={3}>
                             <Paper>
                                 <PieChart tmpUser={user}/>
+                            </Paper>
+                        </Grid>
+                        <Grid item xs={9}>
+                            <Paper>
+                                <StackChart tmpUser={user}/>
                             </Paper>
                         </Grid>
                     </Paper>
