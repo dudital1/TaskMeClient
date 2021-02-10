@@ -4,33 +4,42 @@ import {
   Chart,
   PieSeries,
 } from '@devexpress/dx-react-chart-material-ui';
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
-const PieChart = () => {
-  const [data , setData] = useState([
-    { country: 'Russia', area: 12 },
-    { country: 'Canada', area: 7 },
-    { country: 'USA', area: 7 },
-    { country: 'China', area: 7 },
-    { country: 'Brazil', area: 6 },
-    { country: 'Australia', area: 5 },
-    { country: 'India', area: 2 },
-    { country: 'Others', area: 55 },
-  ]);
+// const categories = ["Education" , "Training" , "Meeting" , "Home" , "General"];
 
-    return (
-      <Paper>
-        <Chart
-          data={data}
-        >
-          <PieSeries
-            valueField="area"
-            argumentField="country"
-          />
-        </Chart>
-      </Paper>
-    );
-  }
+const PieChart = ({tmpUser}) => {
+  const [data, setData] = useState([]);
+
+  function getStats() {
+  axios.post('http://localhost:5500/api/tasks/stats', {
+    email: tmpUser.email,
+  }).then((response => {
+    setData(response.data);
+    response.data.map(item => {
+      console.log(item);
+    })
+  }))
+}
+
+useEffect(() => {
+    getStats();
+}, []);
+
+  return (
+    <Paper>
+      <Chart
+        data={data ? data : []}
+      >
+        <PieSeries
+          valueField="all"
+          argumentField="name"
+        />
+      </Chart>
+    </Paper>
+  );
+}
 
 
 export default PieChart;

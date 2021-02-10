@@ -12,7 +12,7 @@ import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
-import EnhancedTableToolbar from './HeadTable'
+import EnhancedTableToolbar from './HeadTable';
 // import FormDialog from "./FormDialog";
 
 import axios from "axios";
