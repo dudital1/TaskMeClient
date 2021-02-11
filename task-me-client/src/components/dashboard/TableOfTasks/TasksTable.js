@@ -267,7 +267,7 @@ export default function TaskTable({tmpUser}) {
     return (
         <div className={classes.root}>
             <Paper className={classes.paper}>
-                <EnhancedTableToolbar selected={selected} numSelected={selected.length} search={searchTasks}  />
+                <EnhancedTableToolbar selected={selected} numSelected={selected.length} search={searchTasks} email={tmpUser.email} />
                 <TableContainer>
                     <Table
                         className={classes.table}
