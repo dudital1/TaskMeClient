@@ -7,7 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import IconButton from '@material-ui/core/IconButton';
-import EditIcon from '@material-ui/icons/Edit';
+import PlaylistAddOutlinedIcon from '@material-ui/icons/PlaylistAddOutlined';
 import axios from 'axios';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
@@ -17,46 +17,28 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles(({
 
     dialogForm: {
-        display: "flex" , 
+        height:"700px",
+        width:"500px",
+        display: "flex" ,
         flexDirection: "column" ,
     }
 }));
 
-export default function FormDialog({ task, numSelected }) {
+export default function FormAddTask({email}) {
     const [currentTask, setCurrentTask] = useState({});
     const [open, setOpen] = React.useState(false);
     const classes = useStyles();
 
     const handleClickOpen = () => {
-        if (numSelected>1){
-            alert("Can't edit more than 1 task.")
-
-        }
-        else if(numSelected==0){
-            alert("Choose a task to edit.")
-        }
-        else {
-            loadTask(task)
             setOpen(true);
-        }
     };
 
     const handleClose = () => {
-        console.log(currentTask);
-        console.log(task);
         setOpen(false);
     };
-    const handleUpdate = () => {
-        console.log(currentTask);
-        console.log("taks",task);
-        console.log("taskName",currentTask.taskName);
-        console.log("duration",currentTask.durationMin);
-        console.log("startTime",currentTask.startTime);
-        console.log("description",currentTask.description);
-        console.log("status",currentTask.status);
-        console.log("category",currentTask.category);
-        axios.put(`http://localhost:5500/api/tasks`, {
-            _id: task,
+    const handleAdd = () => {
+        axios.post(`http://localhost:5500/api/tasks/add-task`, {
+            userEmail: email,
             taskName: currentTask.taskName,
             durationMin: currentTask.durationMin,
             startTime: currentTask.startTime,
@@ -64,43 +46,30 @@ export default function FormDialog({ task, numSelected }) {
             status: currentTask.status,
             category: currentTask.category
         }).then((response => {
-            if (response.data.message === 'succesful') {
-                console.log('update succesful');
+            if (response.data.message === 'successful') {
+                console.log('Added successful');
             } else {
-                console.log('update failed');
+                console.log('Add task failed');
             }
+            setCurrentTask({})
             handleClose();
         }))
 
     };
 
-    const loadTask = (task) => {
-        axios.get(`http://localhost:5500/api/tasks/view/${task}`).then((response => {
-            if (response.data) {
-                setCurrentTask(response.data)
-                console.log("Task loaded!!",response.data);
-            } else {
-                console.log('failed to load task');
-            }
-        }))
-
-    };
 
     return (
         <div>
             <IconButton variant="outlined" color="primary" onClick={handleClickOpen}>
-                <EditIcon />
+                <PlaylistAddOutlinedIcon />
             </IconButton>
-            <Dialog fullWidth={"fullWidth"} maxWidth={"sm"} open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">Update Task</DialogTitle>
+            <Dialog  open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+                <DialogTitle id="form-dialog-title">Add New Task</DialogTitle>
                 <DialogContent className={classes.dialogForm} >
                     <DialogContentText>
                         Please fill all fields
                     </DialogContentText>
                     <TextField
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
                         required
                         autoFocus
                         margin="dense"
@@ -111,9 +80,6 @@ export default function FormDialog({ task, numSelected }) {
                         onChange={event => { setCurrentTask({...currentTask, taskName:event.target.value })}}
                     />
                     <TextField
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
                         required
                         autoFocus
                         margin="dense"
@@ -125,9 +91,6 @@ export default function FormDialog({ task, numSelected }) {
 
                     />
                     <TextField
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
                         required
                         autoFocus
                         margin="dense"
@@ -140,13 +103,11 @@ export default function FormDialog({ task, numSelected }) {
 
                     />
                     <TextField
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                        required
-                        autoFocus
+                        id="outlined-multiline-static"
+                        multiline
+                        rows={4}
+                        variant="outlined"
                         margin="dense"
-                        id="description"
                         label="Description"
                         type="text"
                         value={currentTask.description}
@@ -168,7 +129,7 @@ export default function FormDialog({ task, numSelected }) {
                     </Select>
                     <InputLabel shrink id="categorySelectLabel">
                         Category
-                    </InputLabel >
+                    </InputLabel>
                     <Select
                         labelId="categorySelectLabel"
                         id="categorySelect"
@@ -183,11 +144,8 @@ export default function FormDialog({ task, numSelected }) {
                     </Select>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose} color="primary">
-                        Cancel
-                    </Button>
-                    <Button onClick={handleUpdate} color="primary">
-                        Update
+                    <Button onClick={handleAdd} color="primary">
+                        Add Task
                     </Button>
                 </DialogActions>
             </Dialog>

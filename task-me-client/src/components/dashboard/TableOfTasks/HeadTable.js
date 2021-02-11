@@ -7,14 +7,12 @@ import InputBase from "@material-ui/core/InputBase";
 import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
-import FilterListIcon from "@material-ui/icons/FilterList";
-import PlaylistAddOutlinedIcon from '@material-ui/icons/PlaylistAddOutlined';
 import PropTypes from "prop-types";
 import React from "react";
 import FormDialog from "./FormDialog";
+import FormAddTask from "./FormAddTask";
 // import TableRow from "@material-ui/core/TableRow";
 import axios from "axios";
-import EditIcon from "@material-ui/icons/Edit";
 
 
 const useToolbarStyles = makeStyles((theme) => ({
@@ -76,14 +74,14 @@ const useToolbarStyles = makeStyles((theme) => ({
     },
 }));
 
-const EnhancedTableToolbar = ({selected,numSelected ,search}) => {
+const EnhancedTableToolbar = ({selected,numSelected ,search,email}) => {
     // const [value, setValue] = React.useState()
     const classes = useToolbarStyles();
     function triggerSearch (tmpValue) {
         // setValue(tmpValue)
         search(tmpValue)
     };
-    function deletSelected(){
+    function deleteSelected(){
         selected.map(task => {
             axios.delete(`http://localhost:5500/api/tasks/${task}`).then((response => {
                 if (response.data.deletedCount!=0) {
@@ -109,9 +107,7 @@ const EnhancedTableToolbar = ({selected,numSelected ,search}) => {
                     All Tasks
                 </Typography>
             )}
-            <IconButton variant="outlined" color="primary" >
-                <PlaylistAddOutlinedIcon />
-            </IconButton>
+            <FormAddTask email={email}/>
             <FormDialog task={selected} numSelected={numSelected}/>
             <div className={classes.search}>
                 <div className={classes.searchIcon}>
@@ -129,7 +125,7 @@ const EnhancedTableToolbar = ({selected,numSelected ,search}) => {
             </div>
             {numSelected > 0 ? (
                 <Tooltip title="Delete">
-                    <IconButton aria-label="delete" onClick={deletSelected}>
+                    <IconButton aria-label="delete" onClick={deleteSelected}>
 
                         <DeleteIcon />
                     </IconButton>
