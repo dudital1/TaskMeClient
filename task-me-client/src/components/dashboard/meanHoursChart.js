@@ -11,11 +11,11 @@ import {
 
 } from '@devexpress/dx-react-chart-material-ui';
 import { Stack } from '@devexpress/dx-react-chart';
-import { EventTracker , Animation} from '@devexpress/dx-react-chart';
+import { EventTracker ,Animation} from '@devexpress/dx-react-chart';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const StackChart = ({ tmpUser }) => {
+const MeanHoursChart = ({ tmpUser }) => {
     const [data, setData] = useState([]);
 
     function getStats() {
@@ -39,26 +39,16 @@ const StackChart = ({ tmpUser }) => {
                 data={data ? data : []}
             >
                 <Title
-                    text="Tasks status"
+                    text="Duration By Category"
 
                 />
                 <ArgumentAxis />
                 <ValueAxis />
 
                 <BarSeries
-                    valueField="done"
+                    valueField="mean"
                     argumentField="name"
                     name="Done"
-                />
-                <BarSeries
-                    valueField="In progress"
-                    argumentField="name"
-                    name="In progress"
-                />
-                <BarSeries
-                    valueField="New"
-                    argumentField="name"
-                    name="New"
                 />
                 <Stack />
                 <Legend />
@@ -71,4 +61,4 @@ const StackChart = ({ tmpUser }) => {
 }
 
 
-export default StackChart;
+export default MeanHoursChart;

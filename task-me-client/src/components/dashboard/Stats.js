@@ -7,6 +7,7 @@ import OverallStats from './OverallStats';
 import clsx from 'clsx';
 import PieChart from './piChart';
 import StackChart from './stackChart';
+import MeanHoursChart from './meanHoursChart';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -32,6 +33,10 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column', 
         marginBottom: '15px'
     },
+    stackCh:{
+        marginBottom: '15px'
+
+    }
 }));
 
 const Stats = () => {
@@ -50,34 +55,39 @@ const Stats = () => {
             <Container maxWidth="lg" className={classes.container}>
                 <Grid container spacing={3}>
                     <Paper className={classes.paper}>
-                        <Grid item xs={12} md={4} lg={4}>
+                        <Grid item xs={12} md={2} lg={2}>
                             <Paper className={fixedHeightPaper}>
                                 <OverallStats tmpUser={user} category={"Meeting"} />
                             </Paper>
                         </Grid>
-                        <Grid item xs={12} md={4} lg={4}>
+                        <Grid item xs={12} md={2} lg={2}>
                             <Paper className={fixedHeightPaper}>
                                 <OverallStats tmpUser={user} category={"Training"} />
                             </Paper>
                         </Grid>
-                        <Grid item xs={12} md={4} lg={4}>
+                        <Grid item xs={12} md={2} lg={2}>
                             <Paper className={fixedHeightPaper}>
                                 <OverallStats tmpUser={user} category={"Education"} />
                             </Paper>
                         </Grid>
-                        <Grid item xs={12} md={4} lg={4}>
+                        <Grid item xs={12} md={2} lg={2}>
                             <Paper className={fixedHeightPaper}>
                                 <OverallStats tmpUser={user} category={"General"} />
                             </Paper>
                         </Grid>
-                        <Grid item xs={12} md={4} lg={4}>
+                        <Grid item xs={12} md={2} lg={2}>
                             <Paper className={fixedHeightPaper}>
                                 <OverallStats tmpUser={user} category={"Home"} />
                             </Paper>
                         </Grid>
-                        <Grid item xs={12} md={4} lg={4}>
+                        <Grid item xs={12} md={2} lg={2}>
                             <Paper className={fixedHeightPaper}>
                                 <OverallStats tmpUser={user} category={"All"} />
+                            </Paper>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Paper className={classes.stackCh}>
+                                <StackChart tmpUser={user}/>
                             </Paper>
                         </Grid>
                         <Grid item xs={3}>
@@ -87,7 +97,7 @@ const Stats = () => {
                         </Grid>
                         <Grid item xs={9}>
                             <Paper>
-                                <StackChart tmpUser={user}/>
+                                <MeanHoursChart tmpUser={user}/>
                             </Paper>
                         </Grid>
                     </Paper>

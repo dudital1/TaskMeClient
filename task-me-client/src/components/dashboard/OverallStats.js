@@ -2,7 +2,6 @@ import React from 'react';
 // import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import Title from './Title';
 import axios from "axios";
 // import { useHistory } from "react-router-dom";
 import {useEffect, useState} from 'react';
@@ -11,6 +10,13 @@ import {useEffect, useState} from 'react';
 //     event.preventDefault();
 // }
 const useStyles = makeStyles({
+    fragment: {
+        display: "flex",
+        justifyContent: "center", 
+        flexDirection: "column",
+        alignItems: "center", 
+        margin: "auto"
+    },
     depositContext: {
         flex: 1,
     },
@@ -42,16 +48,16 @@ export default function OverallStats({tmpUser, category}) {
     }, []);
 
     return (
-        <React.Fragment>
+        <React.Fragment >
+            <div className={classes.fragment}>
             <Typography component="p" variant="h4">
                 {category}
             </Typography>
-            <Title>{completedNumber?completedNumber:"0"}/{categoryLength?categoryLength:"0"}</Title>
-            <Typography component="p" variant="h4">
-            </Typography>
-            <Typography color="textSecondary" className={classes.depositContext}>
+            <Typography variant="h5">{completedNumber?completedNumber:"0"}/{categoryLength?categoryLength:"0"}</Typography>
+            <Typography variant="h6" color="textSecondary" className={classes.depositContext}>
                 Completed
-            </Typography>
+            </Typography >
+            </div>
         </React.Fragment>
     );
 }

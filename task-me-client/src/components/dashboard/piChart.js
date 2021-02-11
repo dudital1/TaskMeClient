@@ -5,11 +5,11 @@ import {
   PieSeries,
   Title,
   Legend,
-  Tooltip
+  Tooltip,
 
 
 } from '@devexpress/dx-react-chart-material-ui';
-import { EventTracker } from '@devexpress/dx-react-chart';
+import { EventTracker , Animation} from '@devexpress/dx-react-chart';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
@@ -48,6 +48,7 @@ const PieChart = ({ tmpUser }) => {
         <Legend position="bottom"/>
         <EventTracker/>
         <Tooltip />
+        <Animation duration={3000}/>
       </Chart>
     </Paper>
   );
