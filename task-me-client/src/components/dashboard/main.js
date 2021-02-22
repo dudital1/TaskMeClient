@@ -32,7 +32,7 @@ import NotificationsConfirmation from "./NotificationsConfirmation";
 function Copyright() {
     return (
         <Typography variant="body2" color="textSecondary" align="center">
-            {'Copyright © '}
+            {'Copyright ©️ '}
             <Link color="inherit" href="#">
                 TaskMe - David and Saar Ltd
             </Link>{' '}
@@ -41,9 +41,9 @@ function Copyright() {
         </Typography>
     );
 }
+
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
-
     root: {
         display: 'flex',
     },
@@ -179,15 +179,25 @@ const Main = () => {
             setSharedUser(response.data.email)
         }))
     }
-
     const [darkMode, setDarkMode] = useState(false)
 
     const theme = createMuiTheme({
-
         palette: {
+            primary: {
+                light: '#8EE4AF',
+                main: '#05386B',
+                dark: '#379683',
+                contrastText: '#fff',
+            },
+            secondary: {
+                light: '#8EE4AF',
+                main: '#379683',
+                dark: '#379683',
+                contrastText: '#000',
+            },
             type: darkMode ? "dark" : "light",
         },
-      });
+    });
 
     // const theme = createMuiTheme({
     //     palette: {
@@ -213,8 +223,8 @@ const Main = () => {
                         <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
                             {user ? user.name.toUpperCase() : ""}
                         </Typography>
-                    Dark Mode
-                    <Switch checked={darkMode} onChange={() => setDarkMode(!darkMode)}></Switch>
+                        Dark Mode
+                        <Switch checked={darkMode} onChange={() => setDarkMode(!darkMode)}></Switch>
                         <Box mr={3}>
                             <NotificationsConfirmation shared={shared} sourceUser={sharedUser}  email={user.email} setShared={setShared} />
                         </Box>
@@ -251,4 +261,3 @@ const Main = () => {
     );
 };
 export default Main;
-
