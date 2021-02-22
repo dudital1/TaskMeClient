@@ -16,6 +16,9 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogActions from "@material-ui/core/DialogActions";
+import Dialog from "@material-ui/core/Dialog";
 
 axios.defaults.withCredentials = true;
 const CLIENT_ID = "797191547152-h2lf9jrigv5bmc3rv4cic2ph3vr42m45.apps.googleusercontent.com";
@@ -60,6 +63,15 @@ const Signin = () => {
     const [emailLog, setEmailLog] = useState("");
     const [passwordLog, setPasswordLog] = useState("");
 
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     const signIn = () => {
         axios.post(`http://localhost:5500/auth/sign-in`, {
@@ -73,7 +85,10 @@ const Signin = () => {
                 localStorage.setItem('storageLogin', true);
                 history.push('/main');
             }
-        }))
+        })).catch(error => {
+            console.log(error)
+            handleClickOpen()
+        })
     }
 
     const responseSuccessGoogle = (response) => {
@@ -144,6 +159,21 @@ const Signin = () => {
                     >
                         Sign In
                     </Button>
+                    <Dialog
+                        fullWidth={true}
+                        maxWidth={'sm'}
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby="alert-dialog-title"
+                        aria-describedby="alert-dialog-description"
+                    >
+                        <DialogTitle id="alert-dialog-title">{" Wrong login credentials "}</DialogTitle>
+                        <DialogActions>
+                            <Button onClick={handleClose} color="primary" variant="contained">
+                                Close
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
                     <Grid container>
                         <Grid item>
                             <Link href="/signup" variant="body2">

@@ -13,6 +13,9 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import Dialog from "@material-ui/core/Dialog";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogActions from "@material-ui/core/DialogActions";
 
 axios.defaults.withCredentials = true;
 
@@ -57,13 +60,26 @@ const Signup = () => {
     const [passwordReg, setPasswordReg] = useState("");
     const [nameReg, setNameReg] = useState("");
 
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        history.push('/');
+        setOpen(false);
+    };
+
+
+
     const register = () => {
         axios.post('http://localhost:5500/auth/signup', {
             email: emailReg,
             password: passwordReg,
             name: nameReg,
         }).then((response => {
-            history.push('/');
+            handleClickOpen()
         }))
     }
     useEffect(() => {
@@ -135,6 +151,21 @@ const Signup = () => {
                     >
                         Register
                     </Button>
+                    <Dialog
+                        fullWidth={true}
+                        maxWidth={'sm'}
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby="alert-dialog-title"
+                        aria-describedby="alert-dialog-description"
+                    >
+                        <DialogTitle id="alert-dialog-title">{" Verify your email to finish signing up for TaskMe "}</DialogTitle>
+                        <DialogActions>
+                            <Button onClick={handleClose} color="primary" variant="contained">
+                                Ok
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
                     <Grid container>
                         <Grid item>
                             <Link href="/" variant="body2">
