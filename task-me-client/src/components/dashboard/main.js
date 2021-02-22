@@ -43,6 +43,7 @@ function Copyright() {
 }
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
+
     root: {
         display: 'flex',
     },
@@ -181,6 +182,7 @@ const Main = () => {
 
     const [darkMode, setDarkMode] = useState(false)
     const theme = createMuiTheme({
+
         palette: {
             type: darkMode ? "dark" : "light",
         },
