@@ -152,6 +152,7 @@ const useStyles = makeStyles((theme) => ({
 export default function TaskTable({tmpUser}) {
 
     const [tasks, setTasks] = useState([])
+    const [refreshSwitch , setRefreshSwitch] = useState(1)
     const [rows, setTmpRows] = useState([])
     const classes = useStyles();
     const [order, setOrder] = React.useState('asc');
@@ -194,7 +195,7 @@ export default function TaskTable({tmpUser}) {
             console.log(tasks.length)
             getAllTasks();
         }
-        },[]);
+        },[refreshSwitch]);
 
 
     const handleRequestSort = (event, property) => {
@@ -232,6 +233,14 @@ export default function TaskTable({tmpUser}) {
         setSelected(newSelected);
     };
 
+    const handleRefresh = () => {
+        console.log("regeffewfe")
+        setSelected([])
+        setTasks([])
+        setTmpRows([])
+        setRefreshSwitch(!refreshSwitch)
+    };
+
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
@@ -267,7 +276,7 @@ export default function TaskTable({tmpUser}) {
     return (
         <div className={classes.root}>
             <Paper className={classes.paper}>
-                <EnhancedTableToolbar selected={selected} numSelected={selected.length} search={searchTasks} email={tmpUser.email} />
+                <EnhancedTableToolbar selected={selected}  numSelected={selected.length} search={searchTasks} email={tmpUser.email} refresh={handleRefresh} />
                 <TableContainer>
                     <Table
                         className={classes.table}

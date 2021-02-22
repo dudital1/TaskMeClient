@@ -22,7 +22,7 @@ const useStyles = makeStyles(({
     }
 }));
 
-export default function FormDialog({ task, numSelected }) {
+export default function FormDialog({ task, numSelected,refresh }) {
     const [currentTask, setCurrentTask] = useState({});
     const [open, setOpen] = React.useState(false);
     const classes = useStyles();
@@ -45,6 +45,7 @@ export default function FormDialog({ task, numSelected }) {
         console.log(currentTask);
         console.log(task);
         setOpen(false);
+        refresh();
     };
     const handleUpdate = () => {
         console.log(currentTask);

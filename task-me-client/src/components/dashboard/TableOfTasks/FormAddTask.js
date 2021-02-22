@@ -24,7 +24,7 @@ const useStyles = makeStyles(({
     }
 }));
 
-export default function FormAddTask({email}) {
+export default function FormAddTask({email,refresh}) {
     const [currentTask, setCurrentTask] = useState({});
     const [open, setOpen] = React.useState(false);
     const classes = useStyles();
@@ -35,6 +35,7 @@ export default function FormAddTask({email}) {
 
     const handleClose = () => {
         setOpen(false);
+        refresh();
     };
     const handleAdd = () => {
         axios.post(`http://localhost:5500/api/tasks/add-task`, {
