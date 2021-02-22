@@ -13,7 +13,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import { makeStyles } from '@material-ui/core/styles';
-
 const useStyles = makeStyles(({
 
     dialogForm: {
@@ -25,15 +24,19 @@ const useStyles = makeStyles(({
 export default function FormDialog({ task, numSelected,refresh }) {
     const [currentTask, setCurrentTask] = useState({});
     const [open, setOpen] = React.useState(false);
+    const [alertOpen, setAlertOpen] = React.useState(false);
+    const [alertMsg, setAlertMsg] = React.useState(false);
+
     const classes = useStyles();
 
     const handleClickOpen = () => {
         if (numSelected>1){
-            alert("Can't edit more than 1 task.")
-
+            setAlertMsg("Can't edit more than 1 task.")
+            setAlertOpen(true)
         }
         else if(numSelected==0){
-            alert("Choose a task to edit.")
+            setAlertMsg("Choose a task to edit.")
+            setAlertOpen(true)
         }
         else {
             loadTask(task)
@@ -42,9 +45,8 @@ export default function FormDialog({ task, numSelected,refresh }) {
     };
 
     const handleClose = () => {
-        console.log(currentTask);
-        console.log(task);
         setOpen(false);
+        setAlertOpen(false);
         refresh();
     };
     const handleUpdate = () => {
@@ -92,7 +94,23 @@ export default function FormDialog({ task, numSelected,refresh }) {
             <IconButton variant="outlined" color="primary" onClick={handleClickOpen}>
                 <EditIcon />
             </IconButton>
+            <Dialog
+                fullWidth={true}
+                maxWidth={'sm'}
+                open={alertOpen}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">{`${alertMsg}`}</DialogTitle>
+                <DialogActions>
+                    <Button onClick={handleClose} color="primary">
+                        Close
+                    </Button>
+                </DialogActions>
+            </Dialog>
             <Dialog fullWidth={"fullWidth"} maxWidth={"sm"} open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+
                 <DialogTitle id="form-dialog-title">Update Task</DialogTitle>
                 <DialogContent className={classes.dialogForm} >
                     <DialogContentText>
@@ -141,21 +159,34 @@ export default function FormDialog({ task, numSelected,refresh }) {
 
                     />
                     <TextField
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                        required
-                        autoFocus
+                        id="outlined-multiline-static"
+                        multiline
+                        rows={4}
+                        variant="outlined"
                         margin="dense"
-                        id="description"
                         label="Description"
                         type="text"
                         value={currentTask.description}
                         onChange={event => { setCurrentTask({...currentTask, description:event.target.value })}}
 
                     />
-                    <InputLabel shrink id="statusSelectLabel">
+                    {/*<TextField*/}
+                    {/*    InputLabelProps={{*/}
+                    {/*        shrink: true,*/}
+                    {/*    }}*/}
+                    {/*    required*/}
+                    {/*    autoFocus*/}
+                    {/*    margin="dense"*/}
+                    {/*    id="description"*/}
+                    {/*    label="Description"*/}
+                    {/*    type="text"*/}
+                    {/*    value={currentTask.description}*/}
+                    {/*    onChange={event => { setCurrentTask({...currentTask, description:event.target.value })}}*/}
+
+                    {/*/>*/}
+                    <InputLabel shrink id="statusSelectLabel" value={currentTask.status}>
                         Status
+
                     </InputLabel>
                     <Select
                         labelId="statusSelectLabel"

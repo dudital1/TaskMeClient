@@ -113,7 +113,6 @@ export default function FormAddTask({email,refresh}) {
                         type="text"
                         value={currentTask.description}
                         onChange={event => { setCurrentTask({...currentTask, description:event.target.value })}}
-
                     />
                     <InputLabel shrink id="statusSelectLabel">
                         Status
