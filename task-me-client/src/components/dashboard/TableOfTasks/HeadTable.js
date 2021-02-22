@@ -4,15 +4,17 @@ import clsx from "clsx";
 import Typography from "@material-ui/core/Typography";
 import SearchIcon from "@material-ui/icons/Search";
 import InputBase from "@material-ui/core/InputBase";
-import Tooltip from "@material-ui/core/Tooltip";
-import IconButton from "@material-ui/core/IconButton";
-import DeleteIcon from "@material-ui/icons/Delete";
 import PropTypes from "prop-types";
 import React from "react";
 import FormDialog from "./FormDialog";
 import FormAddTask from "./FormAddTask";
+import DeleteConfirmation from "./DeleteConfirmation"
+import ShareConfirmation from "./ShareConfirmation";
+import RefreshIcon from '@material-ui/icons/Refresh';
 // import TableRow from "@material-ui/core/TableRow";
-import axios from "axios";
+import {Box} from "@material-ui/core";
+import PlaylistAddOutlinedIcon from "@material-ui/icons/PlaylistAddOutlined";
+import IconButton from "@material-ui/core/IconButton";
 
 
 const useToolbarStyles = makeStyles((theme) => ({
@@ -74,24 +76,14 @@ const useToolbarStyles = makeStyles((theme) => ({
     },
 }));
 
-const EnhancedTableToolbar = ({selected,numSelected ,search,email}) => {
+const EnhancedTableToolbar = ({selected,numSelected,search,email,refresh}) => {
     // const [value, setValue] = React.useState()
     const classes = useToolbarStyles();
     function triggerSearch (tmpValue) {
         // setValue(tmpValue)
         search(tmpValue)
     };
-    function deleteSelected(){
-        selected.map(task => {
-            axios.delete(`http://localhost:5500/api/tasks/${task}`).then((response => {
-                if (response.data.deletedCount!=0) {
-                    console.log("Task deleted!!");
-                } else {
-                    console.log('Failed to delete task');
-                }
-            }))
-        })
-    };
+
     return (
         <Toolbar
             className={clsx(classes.root, {
@@ -107,8 +99,11 @@ const EnhancedTableToolbar = ({selected,numSelected ,search,email}) => {
                     All Tasks
                 </Typography>
             )}
-            <FormAddTask email={email}/>
-            <FormDialog task={selected} numSelected={numSelected}/>
+            <IconButton variant="outlined" color="primary" onClick={refresh}>
+                <RefreshIcon />
+            </IconButton>
+            <FormAddTask email={email} refresh={refresh}/>
+            <FormDialog task={selected} numSelected={numSelected} refresh={refresh}/>
             <div className={classes.search}>
                 <div className={classes.searchIcon}>
                     <SearchIcon />
@@ -124,12 +119,10 @@ const EnhancedTableToolbar = ({selected,numSelected ,search,email}) => {
                 />
             </div>
             {numSelected > 0 ? (
-                <Tooltip title="Delete">
-                    <IconButton aria-label="delete" onClick={deleteSelected}>
-
-                        <DeleteIcon />
-                    </IconButton>
-                </Tooltip>
+                <Box display="flex" >
+                    <DeleteConfirmation task={selected} refresh={refresh}/>
+                    <ShareConfirmation task={selected}/>
+                </Box>
             ) : (<div></div>)}
         </Toolbar>
     );
