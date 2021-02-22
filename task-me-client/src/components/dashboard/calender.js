@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Paper from '@material-ui/core/Paper';
-import { ViewState } from '@devexpress/dx-react-scheduler';
+import {ViewState} from '@devexpress/dx-react-scheduler';
 import {
     Scheduler,
     WeekView,
@@ -12,10 +12,10 @@ import {
     TodayButton,
     DateNavigator,
 } from '@devexpress/dx-react-scheduler-material-ui';
-import { useState, useEffect } from 'react';
+import {useState, useEffect} from 'react';
 import axios from "axios";
 
-const Calender = ({ tmpUser }) => {
+const Calender = ({tmpUser}) => {
     const [data, setData] = useState([]);
     const [currentViewName, setCurrentViewName] = useState('work-week');
     const [tasks, setTasks] = useState([]);
@@ -25,11 +25,11 @@ const Calender = ({ tmpUser }) => {
             axios.post(`http://localhost:5500/api/tasks/`, {
                 email: tmpUser.email,
             }).then((response => {
-                response.data.map((item) => {
+                response.data.forEach((item) => {
                     data.push(item);
                 })
                 if (data) {
-                    data.map(item => {
+                    data.forEach(item => {
                         let tmpTask = {
                             title: item.taskName,
                             startDate: Date.parse(item.startTime),
@@ -38,12 +38,7 @@ const Calender = ({ tmpUser }) => {
                         tasks.push(tmpTask);
                         setTasks([...tasks]);
                     })
-                } else {
-                    console.log(data);
                 }
-                tasks.map(item => {
-                    console.log(item);
-                })
             })))
     }
 
@@ -70,9 +65,9 @@ const Calender = ({ tmpUser }) => {
                     currentViewName={currentViewName}
                     onCurrentViewNameChange={currentViewNameChange}
                 />
-                <Toolbar />
-                <DateNavigator />
-                <TodayButton />
+                <Toolbar/>
+                <DateNavigator/>
+                <TodayButton/>
                 <WeekView
                     name="work-week"
                     displayName="Week"
@@ -80,13 +75,13 @@ const Calender = ({ tmpUser }) => {
                     endDayHour={24}
                     cellDuration={60}
                 />
-                <MonthView />
+                <MonthView/>
                 <DayView
                     cellDuration={60}
                 />
 
-                <ViewSwitcher />
-                <Appointments />
+                <ViewSwitcher/>
+                <Appointments/>
             </Scheduler>
         </Paper>
     );

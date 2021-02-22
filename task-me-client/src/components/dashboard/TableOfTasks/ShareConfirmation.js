@@ -22,9 +22,9 @@ export default function ShareConfirmation({task}) {
     };
 
     const handleCloseShare = () => {
-        task.map(task => {
+        task.forEach(task => {
             axios.post(`http://localhost:5500/api/tasks/share-task`, {
-                _id:task,
+                _id: task,
                 targetUserEmail: email,
             })
         })
@@ -38,7 +38,7 @@ export default function ShareConfirmation({task}) {
         <div>
             <Tooltip title="Delete">
                 <IconButton aria-label="delete" onClick={handleClickOpen}>
-                    <ShareIcon color={"primary"} />
+                    <ShareIcon color={"primary"}/>
                 </IconButton>
             </Tooltip>
             <Dialog
@@ -49,7 +49,7 @@ export default function ShareConfirmation({task}) {
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                <DialogTitle  id="alert-dialog-title">{"Share Task"} </DialogTitle>
+                <DialogTitle id="alert-dialog-title">{"Share Task"} </DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
                         Share with:
@@ -65,15 +65,17 @@ export default function ShareConfirmation({task}) {
                         id="taskName"
                         label="Email"
                         type="text"
-                        onChange={event => { setEmail(event.target.value )}}
+                        onChange={event => {
+                            setEmail(event.target.value)
+                        }}
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose} color="primary">
-                        Disagree
+                    <Button onClick={handleClose} color="primary" variant="contained">
+                        Cancel
                     </Button>
-                    <Button onClick={handleCloseShare} color="primary" autoFocus>
-                        Agree
+                    <Button onClick={handleCloseShare} color="primary" autoFocus variant="contained">
+                        Share
                     </Button>
                 </DialogActions>
             </Dialog>

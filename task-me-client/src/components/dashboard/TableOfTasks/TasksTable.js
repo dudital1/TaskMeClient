@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
-// import clsx from 'clsx';
-import { makeStyles,fade } from '@material-ui/core/styles';
+import {makeStyles, fade} from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -13,13 +12,12 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 import EnhancedTableToolbar from './HeadTable';
-// import FormDialog from "./FormDialog";
-
+import moment from "moment";
 import axios from "axios";
 import {Box} from "@material-ui/core";
 
 function createData(name, status, category, start, duration, id) {
-    return { name, status, category, start, duration, id };
+    return {name, status, category, start, duration, id};
 }
 
 function descendingComparator(a, b, orderBy) {
@@ -31,6 +29,7 @@ function descendingComparator(a, b, orderBy) {
     }
     return 0;
 }
+
 function getComparator(order, orderBy) {
     return order === 'desc'
         ? (a, b) => descendingComparator(a, b, orderBy)
@@ -46,16 +45,17 @@ function stableSort(array, comparator) {
     });
     return stabilizedThis.map((el) => el[0]);
 }
+
 const headCells = [
-    { id: 'name', numeric: false, disablePadding: true, label: 'Task Name' },
-    { id: 'status', numeric: true, disablePadding: false, label: 'Status' },
-    { id: 'category', numeric: true, disablePadding: false, label: 'Category' },
-    { id: 'start', numeric: true, disablePadding: false, label: 'Start' },
-    { id: 'duration', numeric: true, disablePadding: false, label: 'Duration' },
+    {id: 'name', numeric: false, disablePadding: true, label: 'Task Name'},
+    {id: 'status', numeric: true, disablePadding: false, label: 'Status'},
+    {id: 'category', numeric: true, disablePadding: false, label: 'Category'},
+    {id: 'start', numeric: true, disablePadding: false, label: 'Start'},
+    {id: 'duration', numeric: true, disablePadding: false, label: 'Duration'},
 ];
 
 function EnhancedTableHead(props) {
-    const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
+    const {classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort} = props;
     const createSortHandler = (property) => (event) => {
         onRequestSort(event, property);
     };
@@ -68,7 +68,7 @@ function EnhancedTableHead(props) {
                         indeterminate={numSelected > 0 && numSelected < rowCount}
                         checked={rowCount > 0 && numSelected === rowCount}
                         onChange={onSelectAllClick}
-                        inputProps={{ 'aria-label': 'select all desserts' }}
+                        inputProps={{'aria-label': 'select all desserts'}}
                     />
                 </TableCell>
                 {headCells.map((headCell) => (
@@ -152,7 +152,7 @@ const useStyles = makeStyles((theme) => ({
 export default function TaskTable({tmpUser}) {
 
     const [tasks, setTasks] = useState([])
-    const [refreshSwitch , setRefreshSwitch] = useState(1)
+    const [refreshSwitch, setRefreshSwitch] = useState(1)
     const [rows, setTmpRows] = useState([])
     const classes = useStyles();
     const [order, setOrder] = React.useState('asc');
@@ -162,7 +162,7 @@ export default function TaskTable({tmpUser}) {
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
     const getAllTasks = () => {
-        return(
+        return (
             axios.post(`http://localhost:5500/api/tasks/`, {
                 email: tmpUser.email,
             }).then((response => {
@@ -170,32 +170,30 @@ export default function TaskTable({tmpUser}) {
             })))
     }
     const getTasksSearch = (serchWord) => {
-        return(
+        return (
             axios.post(`http://localhost:5500/api/tasks/search/`, {
                 email: tmpUser.email,
-                searchBy:serchWord,
+                searchBy: serchWord,
             }).then((response => {
                 setTasks(response.data)
             })))
     }
 
-    function createRows(){
-        if (tasks.length>0 && rows.length<1) {
+    function createRows() {
+        if (tasks.length > 0 && rows.length < 1) {
             let tmpArr = []
             tasks.map(task => (
-                tmpArr.push(createData(task.taskName, task.status, task.category,task.startTime, task.durationMin,task._id))
+                tmpArr.push(createData(task.taskName, task.status, task.category, moment(new Date(task.startTime)).format('llll'), task.durationMin, task._id))
             ))
             setTmpRows([...tmpArr])
-            console.log("tmp", rows)
         }
     }
 
     useEffect(() => {
-        if (tasks.length===0){
-            console.log(tasks.length)
+        if (tasks.length === 0) {
             getAllTasks();
         }
-        },[refreshSwitch]);
+    }, [refreshSwitch]);
 
 
     const handleRequestSort = (event, property) => {
@@ -255,19 +253,18 @@ export default function TaskTable({tmpUser}) {
 
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
-    function searchTasks(searchWord){
+    function searchTasks(searchWord) {
         let tmpArr = []
-        if(searchWord.length>1) {
+        if (searchWord.length > 1) {
             getTasksSearch(searchWord).then(
                 tasks.map(task => (
-                    tmpArr.push(createData(task.taskName, task.status, task.category, task.startTime, task.durationMin, task._id))
+                    tmpArr.push(createData(task.taskName, task.status, task.category, moment(new Date(task.startTime)).format('llll'), task.durationMin, task._id))
                 )),
                 setTmpRows([...tmpArr]));
-        }
-        else {
+        } else {
             getAllTasks().then(
                 tasks.map(task => (
-                    tmpArr.push(createData(task.taskName, task.status, task.category, task.startTime, task.durationMin, task._id))
+                    tmpArr.push(createData(task.taskName, task.status, task.category, moment(new Date(task.startTime)).format('llll'), task.durationMin, task._id))
                 )),
                 setTmpRows([...tmpArr]));
         }
@@ -276,7 +273,8 @@ export default function TaskTable({tmpUser}) {
     return (
         <div className={classes.root}>
             <Paper className={classes.paper}>
-                <EnhancedTableToolbar selected={selected}  numSelected={selected.length} search={searchTasks} email={tmpUser.email} refresh={handleRefresh} />
+                <EnhancedTableToolbar selected={selected} numSelected={selected.length} search={searchTasks}
+                                      email={tmpUser.email} refresh={handleRefresh}/>
                 <TableContainer>
                     <Table
                         className={classes.table}
@@ -292,7 +290,7 @@ export default function TaskTable({tmpUser}) {
                             onRequestSort={handleRequestSort}
                             rowCount={rows.length}
                         />
-                        {rows.length>0?<TableBody>
+                        {rows.length > 0 ? <TableBody>
                             {stableSort(rows, getComparator(order, orderBy))
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 .map((row, index) => {
@@ -313,7 +311,7 @@ export default function TaskTable({tmpUser}) {
                                                 <Checkbox
                                                     value={row.id}
                                                     checked={isItemSelected}
-                                                    inputProps={{ 'aria-labelledby': labelId }}
+                                                    inputProps={{'aria-labelledby': labelId}}
                                                 />
                                             </TableCell>
                                             <TableCell component="th" id={labelId} scope="row" padding="none">
@@ -327,11 +325,11 @@ export default function TaskTable({tmpUser}) {
                                     );
                                 })}
                             {emptyRows > 0 && (
-                                <TableRow style={{ height: (53) * emptyRows }}>
-                                    <TableCell colSpan={6} />
+                                <TableRow style={{height: (53) * emptyRows}}>
+                                    <TableCell colSpan={6}/>
                                 </TableRow>
                             )}
-                        </TableBody>:createRows()}
+                        </TableBody> : createRows()}
                     </Table>
                 </TableContainer>
                 <TablePagination

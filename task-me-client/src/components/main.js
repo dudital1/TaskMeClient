@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import clsx from 'clsx';
-import { ThemeProvider, createMuiTheme, makeStyles } from '@material-ui/core/styles';
+import {ThemeProvider, createMuiTheme, makeStyles} from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
 import Switch from '@material-ui/core/Switch';
-import MailIcon from '@material-ui/icons/Mail';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -16,19 +15,15 @@ import Avatar from '@material-ui/core/Avatar';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import MainListItems from './listItems';
+import MainListItems from './aside/listItems';
 import axios from "axios";
-import { useHistory } from "react-router-dom";
-import Dashboard from './Dashboard';
+import {useHistory} from "react-router-dom";
+import Dashboard from './dashboard/Dashboard';
 import Box from "@material-ui/core/Box";
-import Profile from './profile';
-import Stats from './Stats';
-import DialogTitle from "@material-ui/core/DialogTitle";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogActions from "@material-ui/core/DialogActions";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import NotificationsConfirmation from "./NotificationsConfirmation";
+import Profile from './profile/profile';
+import Stats from './stats/Stats';
+import NotificationsConfirmation from "./dashboard/NotificationsConfirmation";
+
 function Copyright() {
     return (
         <Typography variant="body2" color="textSecondary" align="center">
@@ -48,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
     },
     toolbar: {
-        paddingRight: 24, // keep right padding when drawer closed
+        paddingRight: 24,
     },
 
     toolbarIcon: {
@@ -127,11 +122,11 @@ const Main = () => {
 
     let history = useHistory();
     const user = JSON.parse(localStorage.getItem("storageUser"));
-    const [content , setContent] = useState("dashboard")
+    const [content, setContent] = useState("dashboard")
     const classes = useStyles();
     const [open, setOpen] = React.useState(true);
-    const [shared,setShared] = useState(0)
-    const [sharedUser,setSharedUser] = useState(0)
+    const [shared, setShared] = useState(0)
+    const [sharedUser, setSharedUser] = useState(0)
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -139,7 +134,6 @@ const Main = () => {
     const handleDrawerClose = () => {
         setOpen(false);
     }
-    // const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
     useEffect(() => {
         axios.get("http://localhost:5500/auth/sign-in").then((response) => {
@@ -147,7 +141,6 @@ const Main = () => {
                 localStorage.clear();
                 history.push('/');
             }
-            console.log(user)
         })
         getSharedTasks()
     }, []);
@@ -158,27 +151,29 @@ const Main = () => {
             history.push('/');
         })
     }
-    function updateContent(tmpContent){
+
+    function updateContent(tmpContent) {
         setContent(tmpContent)
     }
-    function switchContent(){
-        if(content==="dashboard")
-            return <Dashboard />
-        if (content==="profile")
-            return <Profile />
-        if (content==="Stats")
-            return <Stats />
+
+    function switchContent() {
+        if (content === "dashboard")
+            return <Dashboard/>
+        if (content === "profile")
+            return <Profile/>
+        if (content === "Stats")
+            return <Stats/>
     }
 
-    function getSharedTasks(){
+    function getSharedTasks() {
         axios.post(`http://localhost:5500/api/tasks/is-any-shared`, {
-            userEmail:user.email
+            userEmail: user.email
         }).then((response => {
-            console.log(JSON.stringify(response.data.length));
             setShared(response.data.length);
             setSharedUser(response.data.email)
         }))
     }
+
     const [darkMode, setDarkMode] = useState(false)
 
     const theme = createMuiTheme({
@@ -198,7 +193,7 @@ const Main = () => {
     return (
         <ThemeProvider theme={theme}>
             <div className={classes.root}>
-                <CssBaseline />
+                <CssBaseline/>
                 <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
                     <Toolbar className={classes.toolbar}>
                         <IconButton
@@ -208,7 +203,7 @@ const Main = () => {
                             onClick={handleDrawerOpen}
                             className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
                         >
-                            <MenuIcon />
+                            <MenuIcon/>
                         </IconButton>
                         <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
                             {user ? user.name.toUpperCase() : ""}
@@ -216,12 +211,13 @@ const Main = () => {
                         Dark Mode
                         <Switch checked={darkMode} onChange={() => setDarkMode(!darkMode)}></Switch>
                         <Box mr={3}>
-                            <NotificationsConfirmation shared={shared} sourceUser={sharedUser}  email={user.email} setShared={setShared} />
+                            <NotificationsConfirmation shared={shared} sourceUser={sharedUser} email={user.email}
+                                                       setShared={setShared}/>
                         </Box>
-                        <Avatar alt="Remy Sharp" src={user.picture} />
+                        <Avatar alt="Remy Sharp" src={user.picture}/>
                         <IconButton color="inherit">
-                            <Badge color="secondary" >
-                                <ExitToAppIcon onClick={logout} />
+                            <Badge color="secondary">
+                                <ExitToAppIcon onClick={logout}/>
                             </Badge>
                         </IconButton>
                     </Toolbar>
@@ -235,17 +231,17 @@ const Main = () => {
                 >
                     <div className={classes.toolbarIcon}>
                         <IconButton onClick={handleDrawerClose}>
-                            <ChevronLeftIcon />
+                            <ChevronLeftIcon/>
                         </IconButton>
                     </div>
-                    <Divider />
+                    <Divider/>
                     <MainListItems setContent={updateContent}/>
-                    <Divider />
+                    <Divider/>
                 </Drawer>
                 {switchContent()}
             </div>
             <Box pt={4}>
-                <Copyright />
+                <Copyright/>
             </Box>
         </ThemeProvider>
     );

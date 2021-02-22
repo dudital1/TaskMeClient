@@ -1,12 +1,10 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Calender from './calender';
-// import OverallStats from './OverallStats';
 import TaskTable from './TableOfTasks/TasksTable'
-// import { useHistory } from "react-router-dom";
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -14,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
     },
     toolbar: {
-        paddingRight: 24, // keep right padding when drawer closed
+        paddingRight: 24,
     },
 
     toolbarIcon: {
@@ -91,30 +89,28 @@ const useStyles = makeStyles((theme) => ({
 
 const Dashboard = () => {
 
-    // let history = useHistory();
     const user = JSON.parse(localStorage.getItem("storageUser"));
-    // const [tasks, setTasks] = useState([]);
 
     const classes = useStyles();
 
     return (
         <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}>
-            <Grid container spacing={3}>
-                <Grid item xs={12}>
-                    <Paper className={classes.paper}>
-                        <TaskTable tmpUser={user} />
-                    </Paper>
+            <div className={classes.appBarSpacer}/>
+            <Container maxWidth="lg" className={classes.container}>
+                <Grid container spacing={3}>
+                    <Grid item xs={12}>
+                        <Paper className={classes.paper}>
+                            <TaskTable tmpUser={user}/>
+                        </Paper>
+                    </Grid>
+                    <Grid item>
+                        <Paper>
+                            <Calender tmpUser={user}/>
+                        </Paper>
+                    </Grid>
                 </Grid>
-                <Grid item >
-                    <Paper >
-                        <Calender tmpUser={user} />
-                    </Paper>
-                </Grid>
-            </Grid>
-        </Container>
-    </main>
+            </Container>
+        </main>
     );
 };
 export default Dashboard;

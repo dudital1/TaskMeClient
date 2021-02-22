@@ -10,12 +10,12 @@ import {
     BarSeries,
 
 } from '@devexpress/dx-react-chart-material-ui';
-import { Stack } from '@devexpress/dx-react-chart';
-import { EventTracker , Animation} from '@devexpress/dx-react-chart';
-import { useEffect, useState } from 'react';
+import {Stack} from '@devexpress/dx-react-chart';
+import {EventTracker, Animation} from '@devexpress/dx-react-chart';
+import {useEffect, useState} from 'react';
 import axios from 'axios';
 
-const StackChart = ({ tmpUser }) => {
+const StackChart = ({tmpUser}) => {
     const [data, setData] = useState([]);
 
     function getStats() {
@@ -23,9 +23,6 @@ const StackChart = ({ tmpUser }) => {
             email: tmpUser.email,
         }).then((response => {
             setData(response.data);
-            response.data.map(item => {
-                console.log(item);
-            })
         }))
     }
 
@@ -42,8 +39,8 @@ const StackChart = ({ tmpUser }) => {
                     text="Tasks status"
 
                 />
-                <ArgumentAxis />
-                <ValueAxis />
+                <ArgumentAxis/>
+                <ValueAxis/>
 
                 <BarSeries
                     valueField="done"
@@ -60,10 +57,10 @@ const StackChart = ({ tmpUser }) => {
                     argumentField="name"
                     name="New"
                 />
-                <Stack />
-                <Legend />
-                <EventTracker />
-                <Tooltip />
+                <Stack/>
+                <Legend/>
+                <EventTracker/>
+                <Tooltip/>
                 <Animation duration={3000}/>
             </Chart>
         </Paper>

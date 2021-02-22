@@ -12,25 +12,25 @@ import axios from 'axios';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 
 const useStyles = makeStyles(({
 
     dialogForm: {
-        height:"700px",
-        width:"500px",
-        display: "flex" ,
-        flexDirection: "column" ,
+        height: "700px",
+        width: "500px",
+        display: "flex",
+        flexDirection: "column",
     }
 }));
 
-export default function FormAddTask({email,refresh}) {
+export default function FormAddTask({email, refresh}) {
     const [currentTask, setCurrentTask] = useState({});
     const [open, setOpen] = React.useState(false);
     const classes = useStyles();
 
     const handleClickOpen = () => {
-            setOpen(true);
+        setOpen(true);
     };
 
     const handleClose = () => {
@@ -43,6 +43,7 @@ export default function FormAddTask({email,refresh}) {
             taskName: currentTask.taskName,
             durationMin: currentTask.durationMin,
             startTime: currentTask.startTime,
+            endTime: currentTask.endTime,
             description: currentTask.description,
             status: currentTask.status,
             category: currentTask.category
@@ -62,11 +63,11 @@ export default function FormAddTask({email,refresh}) {
     return (
         <div>
             <IconButton variant="outlined" color="primary" onClick={handleClickOpen}>
-                <PlaylistAddOutlinedIcon />
+                <PlaylistAddOutlinedIcon/>
             </IconButton>
-            <Dialog  open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+            <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">Add New Task</DialogTitle>
-                <DialogContent className={classes.dialogForm} >
+                <DialogContent className={classes.dialogForm}>
                     <DialogContentText>
                         Please fill all fields
                     </DialogContentText>
@@ -78,17 +79,21 @@ export default function FormAddTask({email,refresh}) {
                         label="Task Name"
                         type="text"
                         value={currentTask.taskName}
-                        onChange={event => { setCurrentTask({...currentTask, taskName:event.target.value })}}
+                        onChange={event => {
+                            setCurrentTask({...currentTask, taskName: event.target.value})
+                        }}
                     />
                     <TextField
                         required
                         autoFocus
                         margin="dense"
                         id="duration"
-                        label="Duration"
+                        label="Duration in minutes"
                         type="number"
                         value={currentTask.durationMin}
-                        onChange={event => { setCurrentTask({...currentTask, durationMin:event.target.value })}}
+                        onChange={event => {
+                            setCurrentTask({...currentTask, durationMin: event.target.value})
+                        }}
 
                     />
                     <TextField
@@ -100,7 +105,23 @@ export default function FormAddTask({email,refresh}) {
                         type="datetime-local"
                         defaultValue="2021-02-23T17:00"
                         value={currentTask.startTime}
-                        onChange={event => { setCurrentTask({...currentTask, startTime:event.target.value })}}
+                        onChange={event => {
+                            setCurrentTask({...currentTask, startTime: event.target.value})
+                        }}
+
+                    />
+                    <TextField
+                        required
+                        autoFocus
+                        margin="dense"
+                        id="startTime"
+                        label="End date and time"
+                        type="datetime-local"
+                        defaultValue="2021-02-23T17:00"
+                        value={currentTask.endTime}
+                        onChange={event => {
+                            setCurrentTask({...currentTask, endTime: event.target.value})
+                        }}
 
                     />
                     <TextField
@@ -112,7 +133,9 @@ export default function FormAddTask({email,refresh}) {
                         label="Description"
                         type="text"
                         value={currentTask.description}
-                        onChange={event => { setCurrentTask({...currentTask, description:event.target.value })}}
+                        onChange={event => {
+                            setCurrentTask({...currentTask, description: event.target.value})
+                        }}
                     />
                     <InputLabel shrink id="statusSelectLabel">
                         Status
@@ -121,7 +144,9 @@ export default function FormAddTask({email,refresh}) {
                         labelId="statusSelectLabel"
                         id="statusSelect"
                         value={currentTask.status}
-                        onChange={event => { setCurrentTask({...currentTask, status:event.target.value })}}
+                        onChange={event => {
+                            setCurrentTask({...currentTask, status: event.target.value})
+                        }}
                     >
                         <MenuItem value={'In progress'}>In progress</MenuItem>
                         <MenuItem value={'New'}>New</MenuItem>
@@ -134,7 +159,9 @@ export default function FormAddTask({email,refresh}) {
                         labelId="categorySelectLabel"
                         id="categorySelect"
                         value={currentTask.category}
-                        onChange={event => { setCurrentTask({...currentTask, category:event.target.value })}}
+                        onChange={event => {
+                            setCurrentTask({...currentTask, category: event.target.value})
+                        }}
                     >
                         <MenuItem value={'Education'}>Education</MenuItem>
                         <MenuItem value={'Training'}>Training</MenuItem>
@@ -144,7 +171,7 @@ export default function FormAddTask({email,refresh}) {
                     </Select>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleAdd} color="primary">
+                    <Button onClick={handleAdd} color="primary" variant="contained">
                         Add Task
                     </Button>
                 </DialogActions>

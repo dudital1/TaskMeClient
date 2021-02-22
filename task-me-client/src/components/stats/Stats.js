@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -8,7 +8,6 @@ import clsx from 'clsx';
 import PieChart from './piChart';
 import StackChart from './stackChart';
 import MeanHoursChart from './meanHoursChart';
-
 
 const useStyles = makeStyles((theme) => ({
     appBarSpacer: theme.mixins.toolbar,
@@ -29,11 +28,11 @@ const useStyles = makeStyles((theme) => ({
     },
     fixedHeight: {
         height: 240,
-        display: 'flex', 
-        flexDirection: 'column', 
+        display: 'flex',
+        flexDirection: 'column',
         marginBottom: '15px'
     },
-    stackCh:{
+    stackCh: {
         marginBottom: '15px'
 
     }
@@ -41,48 +40,45 @@ const useStyles = makeStyles((theme) => ({
 
 const Stats = () => {
 
-    // let history = useHistory();
     const user = JSON.parse(localStorage.getItem("storageUser"));
-
-    // const [tasks, setTasks] = useState([]);
 
     const classes = useStyles();
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
     return (
         <main className={classes.content}>
-            <div className={classes.appBarSpacer} />
+            <div className={classes.appBarSpacer}/>
             <Container maxWidth="lg" className={classes.container}>
                 <Grid container spacing={3}>
                     <Paper className={classes.paper}>
                         <Grid item xs={12} md={2} lg={2}>
                             <Paper className={fixedHeightPaper}>
-                                <OverallStats tmpUser={user} category={"Meeting"} />
+                                <OverallStats tmpUser={user} category={"Meeting"}/>
                             </Paper>
                         </Grid>
                         <Grid item xs={12} md={2} lg={2}>
                             <Paper className={fixedHeightPaper}>
-                                <OverallStats tmpUser={user} category={"Training"} />
+                                <OverallStats tmpUser={user} category={"Training"}/>
                             </Paper>
                         </Grid>
                         <Grid item xs={12} md={2} lg={2}>
                             <Paper className={fixedHeightPaper}>
-                                <OverallStats tmpUser={user} category={"Education"} />
+                                <OverallStats tmpUser={user} category={"Education"}/>
                             </Paper>
                         </Grid>
                         <Grid item xs={12} md={2} lg={2}>
                             <Paper className={fixedHeightPaper}>
-                                <OverallStats tmpUser={user} category={"General"} />
+                                <OverallStats tmpUser={user} category={"General"}/>
                             </Paper>
                         </Grid>
                         <Grid item xs={12} md={2} lg={2}>
                             <Paper className={fixedHeightPaper}>
-                                <OverallStats tmpUser={user} category={"Home"} />
+                                <OverallStats tmpUser={user} category={"Home"}/>
                             </Paper>
                         </Grid>
                         <Grid item xs={12} md={2} lg={2}>
                             <Paper className={fixedHeightPaper}>
-                                <OverallStats tmpUser={user} category={"All"} />
+                                <OverallStats tmpUser={user} category={"All"}/>
                             </Paper>
                         </Grid>
                         <Grid item xs={12}>

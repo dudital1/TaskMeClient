@@ -11,9 +11,7 @@ import FormAddTask from "./FormAddTask";
 import DeleteConfirmation from "./DeleteConfirmation"
 import ShareConfirmation from "./ShareConfirmation";
 import RefreshIcon from '@material-ui/icons/Refresh';
-// import TableRow from "@material-ui/core/TableRow";
 import {Box} from "@material-ui/core";
-import PlaylistAddOutlinedIcon from "@material-ui/icons/PlaylistAddOutlined";
 import IconButton from "@material-ui/core/IconButton";
 
 
@@ -63,7 +61,6 @@ const useToolbarStyles = makeStyles((theme) => ({
     },
     inputInput: {
         padding: theme.spacing(1, 1, 1, 0),
-        // vertical padding + font size from searchIcon
         paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
         transition: theme.transitions.create('width'),
         width: '100%',
@@ -76,11 +73,10 @@ const useToolbarStyles = makeStyles((theme) => ({
     },
 }));
 
-const EnhancedTableToolbar = ({selected,numSelected,search,email,refresh}) => {
-    // const [value, setValue] = React.useState()
+const EnhancedTableToolbar = ({selected, numSelected, search, email, refresh}) => {
     const classes = useToolbarStyles();
-    function triggerSearch (tmpValue) {
-        // setValue(tmpValue)
+
+    function triggerSearch(tmpValue) {
         search(tmpValue)
     };
 
@@ -100,13 +96,13 @@ const EnhancedTableToolbar = ({selected,numSelected,search,email,refresh}) => {
                 </Typography>
             )}
             <IconButton variant="outlined" color="primary" onClick={refresh}>
-                <RefreshIcon />
+                <RefreshIcon/>
             </IconButton>
             <FormAddTask email={email} refresh={refresh}/>
             <FormDialog task={selected} numSelected={numSelected} refresh={refresh}/>
             <div className={classes.search}>
                 <div className={classes.searchIcon}>
-                    <SearchIcon />
+                    <SearchIcon/>
                 </div>
                 <InputBase
                     placeholder="Search…"
@@ -114,12 +110,14 @@ const EnhancedTableToolbar = ({selected,numSelected,search,email,refresh}) => {
                         root: classes.inputRoot,
                         input: classes.inputInput,
                     }}
-                    inputProps={{ 'aria-label': 'search' }}
-                    onChange={event=>{triggerSearch(event.target.value)}}
+                    inputProps={{'aria-label': 'search'}}
+                    onChange={event => {
+                        triggerSearch(event.target.value)
+                    }}
                 />
             </div>
             {numSelected > 0 ? (
-                <Box display="flex" >
+                <Box display="flex">
                     <DeleteConfirmation task={selected} refresh={refresh}/>
                     <ShareConfirmation task={selected}/>
                 </Box>
