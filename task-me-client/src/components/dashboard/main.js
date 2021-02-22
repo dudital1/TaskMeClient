@@ -187,7 +187,7 @@ const Main = () => {
                 light: '#8EE4AF',
                 main: '#05386B',
                 dark: '#379683',
-                contrastText: '#fff',
+                contrastText: '#8EE4AF',
             },
             secondary: {
                 light: '#8EE4AF',
@@ -198,12 +198,6 @@ const Main = () => {
             type: darkMode ? "dark" : "light",
         },
     });
-
-    // const theme = createMuiTheme({
-    //     palette: {
-    //         type: darkMode ? "dark" : "light",
-    //     },
-    // });
 
     return (
         <ThemeProvider theme={theme}>
