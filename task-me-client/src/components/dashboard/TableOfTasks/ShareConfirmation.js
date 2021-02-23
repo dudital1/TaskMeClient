@@ -23,7 +23,7 @@ export default function ShareConfirmation({task}) {
 
     const handleCloseShare = () => {
         task.forEach(task => {
-            axios.post(`http://enigmatic-spire-75482.herokuapp.com/api/tasks/share-task`, {
+            axios.post(`https://enigmatic-spire-75482.herokuapp.com/api/tasks/share-task`, {
                 _id: task,
                 targetUserEmail: email,
             })
