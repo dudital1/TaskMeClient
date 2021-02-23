@@ -232,7 +232,6 @@ export default function TaskTable({tmpUser}) {
     };
 
     const handleRefresh = () => {
-        console.log("regeffewfe")
         setSelected([])
         setTasks([])
         setTmpRows([])
