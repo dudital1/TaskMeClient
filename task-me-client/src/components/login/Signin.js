@@ -121,7 +121,7 @@ const Signin = () => {
             <div className={classes.paper}>
                 <CardMedia
                     className={classes.media}
-                    image="%PUBLIC_URL%/logo.png"
+                    image="task-me-client/public/logo.png"
                     title="TaskMe"
                 />
                 <Avatar className={classes.avatar}>
