@@ -3,4 +3,5 @@ from = '/*'
 to = "https://taskmeds.netlify.app/auth/activate/:token"
 status = 200
 force = true
+query = {token = ":token"}
 headers = {X-From = "Netlify"}
