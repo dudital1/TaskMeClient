@@ -136,7 +136,7 @@ const Main = () => {
     }
 
     useEffect(() => {
-        axios.get("http://localhost:5500/auth/sign-in").then((response) => {
+        axios.get("https://enigmatic-spire-75482.herokuapp.com/auth/sign-in").then((response) => {
             if (response.data.loggedIn === false) {
                 localStorage.clear();
                 history.push('/');
