@@ -50,7 +50,7 @@ export default function FormDialog({task, numSelected, refresh}) {
         refresh();
     };
     const handleUpdate = () => {
-        axios.put(`http://localhost:5500/api/tasks`, {
+        axios.put(`https://enigmatic-spire-75482.herokuapp.com/api/tasks`, {
             _id: task,
             taskName: currentTask.taskName,
             durationMin: currentTask.durationMin,
@@ -70,7 +70,7 @@ export default function FormDialog({task, numSelected, refresh}) {
     };
 
     const loadTask = (task) => {
-        axios.get(`http://localhost:5500/api/tasks/view/${task}`).then((response => {
+        axios.get(`https://enigmatic-spire-75482.herokuapp.com/api/tasks/view/${task}`).then((response => {
             if (response.data) {
                 setCurrentTask(response.data)
                 console.log("Task loaded!!");

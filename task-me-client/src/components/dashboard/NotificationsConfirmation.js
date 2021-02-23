@@ -22,7 +22,7 @@ export default function NotificationsConfirmation({shared ,email , sourceUser,se
     };
 
     function handleSharedTasks(){
-        axios.post(`http://localhost:5500/api/tasks/apply-shared`, {
+        axios.post(`https://enigmatic-spire-75482.herokuapp.com/api/tasks/apply-shared`, {
             userEmail:email
         }).then((response => {
             setShared(0)

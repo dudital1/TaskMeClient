@@ -24,7 +24,7 @@ export default function DeleteConfirmation({task, refresh}) {
 
     function handleCloseDelete() {
         task.forEach(task => {
-            axios.delete(`http://localhost:5500/api/tasks/${task}`).then((response => {
+            axios.delete(`https://enigmatic-spire-75482.herokuapp.com/api/tasks/${task}`).then((response => {
                 if (response.data.deletedCount !== 0) {
                     console.log("Task deleted!!");
                     refresh();

@@ -146,7 +146,7 @@ const Main = () => {
     }, []);
 
     function logout() {
-        axios.get('http://localhost:5500/auth/logout').then(() => {
+        axios.get('https://enigmatic-spire-75482.herokuapp.com/auth/logout').then(() => {
             localStorage.clear();
             history.push('/');
         })
@@ -166,7 +166,7 @@ const Main = () => {
     }
 
     function getSharedTasks() {
-        axios.post(`http://localhost:5500/api/tasks/is-any-shared`, {
+        axios.post(`https://enigmatic-spire-75482.herokuapp.com/api/tasks/is-any-shared`, {
             userEmail: user.email
         }).then((response => {
             setShared(response.data.length);

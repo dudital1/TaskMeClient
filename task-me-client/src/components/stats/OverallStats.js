@@ -25,9 +25,9 @@ export default function OverallStats({tmpUser, category}) {
     const [completedNumber, setCompletedNumber] = useState(null);
 
     const tasksByCategory = () => {
-        let call = `http://localhost:5500/api/tasks/?category=${category}`
+        let call = `https://enigmatic-spire-75482.herokuapp.com/api/tasks/?category=${category}`
         if (category === "All")
-            call = "http://localhost:5500/api/tasks/"
+            call = "https://enigmatic-spire-75482.herokuapp.com/api/tasks/"
         return (
             axios.post(`${call}`, {
                 email: user.email,

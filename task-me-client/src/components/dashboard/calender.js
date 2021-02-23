@@ -22,7 +22,7 @@ const Calender = ({tmpUser}) => {
 
     const getAllTasks = () => {
         return (
-            axios.post(`http://localhost:5500/api/tasks/`, {
+            axios.post(`https://enigmatic-spire-75482.herokuapp.com/api/tasks/`, {
                 email: tmpUser.email,
             }).then((response => {
                 response.data.forEach((item) => {

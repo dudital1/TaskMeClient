@@ -74,7 +74,7 @@ const Signup = () => {
 
 
     const register = () => {
-        axios.post('http://localhost:5500/auth/signup', {
+        axios.post('https://enigmatic-spire-75482.herokuapp.com/auth/signup', {
             email: emailReg,
             password: passwordReg,
             name: nameReg,
@@ -83,7 +83,7 @@ const Signup = () => {
         }))
     }
     useEffect(() => {
-        axios.get("http://localhost:5500/auth/sign-in").then((response) => {
+        axios.get("https://enigmatic-spire-75482.herokuapp.com/auth/sign-in").then((response) => {
             if (response.data.loggedIn === true)
                 console.log(response.data);
         })

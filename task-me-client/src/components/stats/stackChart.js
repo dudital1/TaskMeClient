@@ -19,7 +19,7 @@ const StackChart = ({tmpUser}) => {
     const [data, setData] = useState([]);
 
     function getStats() {
-        axios.post('http://localhost:5500/api/tasks/stats', {
+        axios.post('https://enigmatic-spire-75482.herokuapp.com/api/tasks/stats', {
             email: tmpUser.email,
         }).then((response => {
             setData(response.data);

@@ -163,7 +163,7 @@ export default function TaskTable({tmpUser}) {
 
     const getAllTasks = () => {
         return (
-            axios.post(`http://localhost:5500/api/tasks/`, {
+            axios.post(`https://enigmatic-spire-75482.herokuapp.com/api/tasks/`, {
                 email: tmpUser.email,
             }).then((response => {
                 setTasks(response.data)
@@ -171,7 +171,7 @@ export default function TaskTable({tmpUser}) {
     }
     const getTasksSearch = (serchWord) => {
         return (
-            axios.post(`http://localhost:5500/api/tasks/search/`, {
+            axios.post(`https://enigmatic-spire-75482.herokuapp.com/api/tasks/search/`, {
                 email: tmpUser.email,
                 searchBy: serchWord,
             }).then((response => {

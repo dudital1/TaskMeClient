@@ -38,7 +38,7 @@ export default function FormAddTask({email, refresh}) {
         refresh();
     };
     const handleAdd = () => {
-        axios.post(`http://localhost:5500/api/tasks/add-task`, {
+        axios.post(`https://enigmatic-spire-75482.herokuapp.com/api/tasks/add-task`, {
             userEmail: email,
             taskName: currentTask.taskName,
             durationMin: currentTask.durationMin,

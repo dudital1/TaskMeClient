@@ -36,7 +36,7 @@ const VerifyLink = () => {
     let history = useHistory();
     let {token} = useParams();
     const verify = () => {
-        axios.post('http://localhost:5500/auth/email-activate', {
+        axios.post('https://enigmatic-spire-75482.herokuapp.com/auth/email-activate', {
             token: token
         }).then((response => {
             history.push('/');
