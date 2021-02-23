@@ -36,11 +36,13 @@ const VerifyLink = () => {
     let history = useHistory();
     let {token} = useParams();
     const verify = () => {
+        console.log(token)
         axios.post('https://enigmatic-spire-75482.herokuapp.com/auth/email-activate', {
             token: token
         }).then((response => {
             history.push('/');
         }))
+        // history.push('/');
     }
     return (
         <Container component="main" maxWidth="xs">
