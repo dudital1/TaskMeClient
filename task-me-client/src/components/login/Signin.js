@@ -92,10 +92,13 @@ const Signin = () => {
     }
 
     const responseSuccessGoogle = (response) => {
+        console.log("trying login with google")
+        console.log("This is google res",response.tokenId)
         axios({
             method: "POST",
             url: "https://enigmatic-spire-75482.herokuapp.com/auth/googlelogin",
             data: {tokenId: response.tokenId}
+
         }).then(response => {
             localStorage.setItem('storageUser', JSON.stringify(response.data.user));
             localStorage.setItem('storageLogin', true);
