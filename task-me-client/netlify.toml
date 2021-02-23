@@ -1,4 +1,6 @@
 [[redirects]]
-    from ='/*'
-    to ="/auth/activate/:token"
-    status = 200
+from = '/*'
+to = "https://taskmeds.netlify.app/auth/activate/:token"
+status = 200
+force = true
+headers = {X-From = "Netlify"}
