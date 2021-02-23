@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="2805a1e9-4cb9-4751-90cf-014d1a9cf747" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../tmp-test/src/Components/Auth.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../tmp-test/src/Components/Chart.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../tmp-test/src/Components/Dashboard.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../tmp-test/src/Components/Deposits.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../tmp-test/src/Components/Orders.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../tmp-test/src/Components/Title.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../tmp-test/src/Components/listItems.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task-me-client/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/task-me-client/.eslintcache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task-me-client/src/components/login/Signin.js" beforeDir="false" afterPath="$PROJECT_DIR$/task-me-client/src/components/login/Signin.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task-me-client/src/components/login/Signup.js" beforeDir="false" afterPath="$PROJECT_DIR$/task-me-client/src/components/login/Signup.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="proportion" value="0.35439706" />
+    <option name="selectedIndex" value="1" />
+    <option name="showPreview" value="true" />
+  </component>
+  <component name="ProjectId" id="1nhAPc7VyNyc4kmVVEBEqLf55CU" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/task-me-client/src/components/dashboard" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/task-me-client/src/components/dashboard" />
+      <recent name="$PROJECT_DIR$/task-me-client/src/components/dashboard/TableOfTasks" />
+      <recent name="$PROJECT_DIR$/task-me-client/src/components/dashboards" />
+      <recent name="$PROJECT_DIR$/task-me-client/src/components" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/task-me-client/src/components" />
+      <recent name="$PROJECT_DIR$/task-me-client/src/components/aside" />
+      <recent name="$PROJECT_DIR$/task-me-client/src/components/profile" />
+      <recent name="$PROJECT_DIR$/task-me-client/src" />
+      <recent name="$PROJECT_DIR$/task-me-client/src/components/login" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Node.js.Dashboard.js">
+    <configuration name="Dashboard.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/task-me-client/src/components/dashboard/Dashboard.js" working-dir="$PROJECT_DIR$/task-me-client/src/components/dashboard">
+      <method v="2" />
+    </configuration>
+    <configuration name="index.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/task-me-client/src/index.js" working-dir="$PROJECT_DIR$/task-me-client/src">
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Node.js.Dashboard.js" />
+        <item itemvalue="Node.js.index.js" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="2805a1e9-4cb9-4751-90cf-014d1a9cf747" name="Default Changelist" comment="" />
+      <created>1611831929513</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1611831929513</updated>
+      <workItem from="1611831930692" duration="3003000" />
+      <workItem from="1611854709070" duration="69000" />
+      <workItem from="1611854814286" duration="65390000" />
+      <workItem from="1612711266359" duration="201000" />
+      <workItem from="1612803672697" duration="1462000" />
+      <workItem from="1612964802233" duration="21170000" />
+      <workItem from="1613577819648" duration="37492000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+</project>

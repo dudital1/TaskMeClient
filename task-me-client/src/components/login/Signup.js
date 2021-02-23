@@ -89,6 +89,10 @@ const Signup = () => {
         })
     }, []);
 
+    function redirectSignIn(){
+        history.push('/');
+    }
+
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline/>
@@ -168,9 +172,9 @@ const Signup = () => {
                     </Dialog>
                     <Grid container>
                         <Grid item>
-                            <Button onClick={history.push("/")} variant="body2">
+                            <Link onClick={redirectSignIn}  variant="body2">
                                 {"Already have an account? Sign In"}
-                            </Button>
+                            </Link>
                         </Grid>
                     </Grid>
                 </form>

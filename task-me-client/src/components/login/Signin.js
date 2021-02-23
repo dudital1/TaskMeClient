@@ -109,6 +109,10 @@ const Signin = () => {
     const responseErrorGoogle = (response) => {
         history.push('/')
     }
+
+    const redirectSignup = (response) => {
+        history.push('/signup')
+    }
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline/>
@@ -179,9 +183,9 @@ const Signin = () => {
                     </Dialog>
                     <Grid container>
                         <Grid item>
-                            <Button onClick={history.push("/signup")} variant="body2">
+                            <Link  onClick={redirectSignup} variant="body2">
                                 {"Don't have an account? Sign Up"}
-                            </Button>
+                            </Link>
                         </Grid>
                     </Grid>
                 </form>
@@ -192,7 +196,6 @@ const Signin = () => {
                     onSuccess={responseSuccessGoogle}
                     onFailure={responseErrorGoogle}
                     cookiePolicy={'single_host_origin'}
-
                 />
             </div>
             <Box mt={8}>
