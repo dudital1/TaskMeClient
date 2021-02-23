@@ -179,9 +179,9 @@ const Signin = () => {
                     </Dialog>
                     <Grid container>
                         <Grid item>
-                            <Link onClick={history.push("/signup")} variant="body2">
+                            <Button onClick={history.push("/signup")} variant="body2">
                                 {"Don't have an account? Sign Up"}
-                            </Link>
+                            </Button>
                         </Grid>
                     </Grid>
                 </form>
