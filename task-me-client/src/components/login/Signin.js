@@ -19,8 +19,6 @@ import Container from '@material-ui/core/Container';
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogActions from "@material-ui/core/DialogActions";
 import Dialog from "@material-ui/core/Dialog";
-import CardMedia from '@material-ui/core/CardMedia';
-
 
 axios.defaults.withCredentials = true;
 const CLIENT_ID = "797191547152-h2lf9jrigv5bmc3rv4cic2ph3vr42m45.apps.googleusercontent.com";
@@ -119,11 +117,6 @@ const Signin = () => {
         <Container component="main" maxWidth="xs">
             <CssBaseline/>
             <div className={classes.paper}>
-                <CardMedia
-                    className={classes.media}
-                    image="task-me-client/public/logo.png"
-                    title="TaskMe"
-                />
                 <Avatar className={classes.avatar}>
                     <LockOutlinedIcon/>
                 </Avatar>
